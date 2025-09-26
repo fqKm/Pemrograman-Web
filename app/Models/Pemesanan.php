@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Models\User;
+use App\Models\Member;
 use App\Models\Pembayaran;
 use App\Models\Kelas;
 
@@ -15,6 +15,9 @@ class Pemesanan extends Model
     public $incrementing = 'true';
     public $timestamps = 'true';
     protected $fillable = ['pembayaran_id', 'member_id', 'kelas_id', 'tanggal_pemesanan', 'status'];
+    protected $casts = [
+        'tanggal_pemesanan' => 'date',
+    ];
 
     public function pembayaran()
     {

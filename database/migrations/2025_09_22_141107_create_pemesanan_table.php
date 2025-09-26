@@ -13,16 +13,12 @@ return new class extends Migration
     {
         Schema::create('pemesanan', function (Blueprint $table) {
             $table->id('pemesanan_id');
-            $table->unsignedBigInteger('pembayaran_id')->nullable();
-            $table->unsignedBigInteger('member_id');
-            $table->unsignedBigInteger('kelas_id');
+            $table->foreignId('member_id')->constrained('member')->onDelete('cascade');
+            $table->foreignId('pembayaran_id')->nullable()->constrained('pembayaran')->nullOnDelete();
+            $table->foreignId('kelas_id')->constrained('kelas')->onDelete('cascade');
             $table->date('tanggal_pemesanan');
-            $table->string('status');
+            $table->enum('status', ['proses', 'terkonfirmasi', 'dibatalkan'])->default('proses');
             $table->timestamps();
-
-            $table->foreign('pembayaran_id')->references('pembayaran_id')->on('pembayaran')->onDelete('set null');
-            $table->foreign('member_id')->references('member_id')->on('member')->onDelete('cascade');
-            $table->foreign('kelas_id')->references('kelas_id')->on('kelas')->onDelete('cascade');
         });
     }
 

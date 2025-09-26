@@ -15,7 +15,11 @@ class Pembayaran extends Model
     public $incrementing = 'true';
     public $timestamps = 'true';
 
-    protected $fillable = ['member_id', 'jumlah', 'metode_pembayaran', 'tanggal_pembayaran'];
+    protected $fillable = ['member_id', 'jumlah', 'metode_pembayaran', 'waktu_pembayaran'];
+    protected $casts = [
+        'jumlah' => 'decimal:2',
+        'waktu_pembayaran' => 'datetime'
+    ];
 
     public function pemesanan()
     {
