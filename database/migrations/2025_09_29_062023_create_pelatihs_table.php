@@ -11,12 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('pelatihs', function (Blueprint $table) {
-            $table->id();
+        Schema::create('pelatih', function (Blueprint $table) {
+            $table->id();          // PK
+            $table->string('nama_pelatih', 100);
+            $table->string('spesialisasi', 100)->nullable();
+            $table->date('tanggal_masuk')->nullable();     // hire_date
             $table->timestamps();
         });
     }
-
     /**
      * Reverse the migrations.
      */
