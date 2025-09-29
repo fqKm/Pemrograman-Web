@@ -1,0 +1,32 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class alat extends Model
+{
+    use HasFactory;
+
+    protected $table = 'alat';
+    protected $primaryKey = 'alat_id';
+
+    protected $fillable = [
+        'nama_alat',
+        'tipe',
+        'status',
+        'tanggal_pembelian',
+        'tanggal_perawatan_terakhir',
+    ];
+
+        public function kemajuan()
+    {
+        return $this->belongsToMany(
+            Alat::class,
+            'kemajuan_alat',
+            'kemajuan_id',
+            'alat_id'
+        );
+    }
+}
