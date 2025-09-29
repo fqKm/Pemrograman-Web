@@ -10,12 +10,17 @@ use App\Models\Langganan;
 class Pembayaran extends Model
 {
     protected $table = 'pembayaran';
-    protected $primaryKey = 'pembayaran_id';
+    protected $primaryKey = 'id';
     protected $keyType = 'int';
     public $incrementing = 'true';
     public $timestamps = 'true';
 
-    protected $fillable = ['member_id', 'jumlah', 'metode_pembayaran', 'waktu_pembayaran'];
+    protected $fillable = [
+        'members_id',
+        'jumlah',
+        'metode_pembayaran',
+        'waktu_pembayaran'
+    ];
     protected $casts = [
         'jumlah' => 'decimal:2',
         'waktu_pembayaran' => 'datetime'
@@ -28,7 +33,7 @@ class Pembayaran extends Model
 
     public function member()
     {
-        return $this->belongsTo(Member::class, 'member_id');
+        return $this->belongsTo(Member::class, 'members_id', 'id');
     }
 
     public function langganan()

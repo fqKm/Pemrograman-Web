@@ -10,11 +10,13 @@ use App\Models\Kelas;
 class Pemesanan extends Model
 {
     protected $table = 'pemesanan';
-    protected $primaryKey = 'pemesanan_id';
+    protected $primaryKey = 'id';
     protected $keyType = 'int';
     public $incrementing = 'true';
     public $timestamps = 'true';
-    protected $fillable = ['pembayaran_id', 'member_id', 'kelas_id', 'tanggal_pemesanan', 'status'];
+    protected $fillable = [
+        'pembayaran_id', 'membera_id', 'kelas_id', 'tanggal_pemesanan', 'status'
+    ];
     protected $casts = [
         'tanggal_pemesanan' => 'date',
     ];
@@ -26,7 +28,7 @@ class Pemesanan extends Model
 
     public function member()
     {
-        return $this->belongsTo(Member::class, 'member_id');
+        return $this->belongsTo(Member::class, 'members_id');
     }
 
     public function kelas()

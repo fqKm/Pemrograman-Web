@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Member extends Model
 {
-    protected $table = 'member';
+    protected $table = 'members';
     protected $primaryKey = 'id';
     protected $keyType = 'integer';
     public $timestamps = true;
@@ -17,11 +17,6 @@ class Member extends Model
         'email',
         'tanggal_lahir',
         'tanggal_bergabung',
-        'langganan_id',
         'status'
     ];
-    public function langganan()
-    {
-        return $this->belongsTo(Langganan::class, 'langganan_id', 'id');
-    }
 }

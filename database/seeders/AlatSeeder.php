@@ -40,6 +40,8 @@ class AlatSeeder extends Seeder
             ]
         ];
 
-        Alat::create($alat);
+        foreach ($alat as $data_alat){
+            Alat::create($data_alat);
+        };
     }
 }

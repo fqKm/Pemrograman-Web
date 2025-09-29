@@ -10,11 +10,11 @@ class Kemajuan extends Model
     use HasFactory;
 
     protected $table = 'kemajuan';
-    protected $primaryKey = 'kemajuan_id';
+    protected $primaryKey = 'id';
 
 
     protected $fillable = [
-        'member_id',
+        'members_id',
         'nama_latihan',
         'tanggal_workout',
         'jumlah_set',

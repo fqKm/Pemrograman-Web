@@ -15,8 +15,9 @@ return new class extends Migration
             $table->id();
             $table->dateTime('tanggal_bergabung');
             $table->dateTime('tanggal_berakhir');
+            $table->foreignId('members_id')->constrained('members')->onDelete('cascade');
             $table->foreignId('pembayaran_id')->constrained('pembayaran')->onDelete('cascade');
-            $table->foreignId('membership_id')->constrained('memberships')->onDelete('cascade');
+            $table->foreignId('membership_id')->constrained('membership')->onDelete('cascade');
             $table->timestamps();
         });
     }

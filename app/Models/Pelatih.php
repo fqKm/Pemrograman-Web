@@ -7,9 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 class Pelatih extends Model
 {
     protected $table = 'pelatih';
-    protected $primaryKey = 'id_pelatih';
+    protected $primaryKey = 'id';
     public $incrementing = true;
     protected $keyType = 'int';
-    protected $fillable = ['nama_pelatih', 'spesialisasi', 'tanggal_masuk'];
+    protected $fillable = [
+        'nama_pelatih',
+        'spesialisasi',
+        'tanggal_masuk'];
     public $timestamps = true;
 }

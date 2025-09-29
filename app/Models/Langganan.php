@@ -16,6 +16,7 @@ class Langganan extends Model
         'tanggal_berakhir',
         'pembayaran_id',
         'membership_id',
+        'members_id'
     ];
 
     function pembayaran()
@@ -27,5 +28,9 @@ class Langganan extends Model
     {
         $this->belongsTo(Membership::class, 'membership_id', 'id');
 
+    }
+
+    public function members(){
+        return $this->belongsTo(Member::class, 'members_id', 'id');
     }
 }

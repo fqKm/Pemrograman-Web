@@ -10,7 +10,7 @@ class Alat extends Model
     use HasFactory;
 
     protected $table = 'alat';
-    protected $primaryKey = 'alat_id';
+    protected $primaryKey = 'alat';
 
     protected $fillable = [
         'nama_alat',

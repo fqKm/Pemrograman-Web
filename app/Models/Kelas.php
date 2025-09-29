@@ -7,17 +7,17 @@ use Illuminate\Database\Eloquent\Model;
 class Kelas extends Model
 {
     protected $table = 'kelas';
-    protected $primaryKey = 'kelas_id';
+    protected $primaryKey = 'id';
     public $incrementing = true;
     protected $keyType = 'int';
 
     protected $fillable = [
         'id_pelatih',
-        'class_name',
-        'start_time',
-        'end_time',
-        'max_capacity',
-        'description',
+        'nama_kelas',
+        'waktu_mulai',
+        'waktu_selesai',
+        'kapasitas_maksimum',
+        'deskripsi',
     ];
     public $timestamps = true;
 
