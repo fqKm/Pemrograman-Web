@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('nomor_hp');
             $table->date('tanggal_lahir');
             $table->date('tanggal_bergabung');
-            $table->foreignId('langganan_id')->constrained()->onDelete('cascade');
+            $table->foreignId('langganan_id')->constrained('langganan')->onDelete('cascade');
             $table->enum('status', ['aktif', 'tidak aktif'])->default('tidak aktif');
             $table->timestamps();
         });

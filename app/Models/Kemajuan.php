@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class kemajuan extends Model
+class Kemajuan extends Model
 {
     use HasFactory;
 
@@ -14,13 +14,13 @@ class kemajuan extends Model
 
 
     protected $fillable = [
-        'member_id', 
-        'nama_latihan', 
-        'tanggal_workout', 
-        'jumlah_set', 
-        'jumlah_repetisi', 
-        'beban', 
-        'durasi', 
+        'member_id',
+        'nama_latihan',
+        'tanggal_workout',
+        'jumlah_set',
+        'jumlah_repetisi',
+        'beban',
+        'durasi',
         'catatan'
     ];
 

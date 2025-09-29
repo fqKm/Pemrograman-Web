@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Alat;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -18,7 +19,7 @@ class AlatSeeder extends Seeder
                 'tipe' => 'Beban',
                 'status' => 'Aktif',
                 'tanggal_pembelian' => '10-01-2023',
-                'created_at' => now(), 
+                'created_at' => now(),
                 'updated_at' => now()
             ],
             [
@@ -26,7 +27,7 @@ class AlatSeeder extends Seeder
                 'tipe' => 'Kardio',
                 'status' => 'Aktif',
                 'tanggal_pembelian' => '05-11-2022',
-                'created_at' => now(), 
+                'created_at' => now(),
                 'updated_at' => now()
             ],
             [
@@ -34,9 +35,11 @@ class AlatSeeder extends Seeder
                 'tipe' => 'Kekuatan',
                 'status' => 'Dalam Perbaikan',
                 'tanggal_pembelian' => '20-08-2022',
-                'created_at' => now(), 
+                'created_at' => now(),
                 'updated_at' => now()
             ]
         ];
+
+        Alat::create($alat);
     }
 }
