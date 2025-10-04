@@ -15,7 +15,7 @@ class KemajuanSeeder extends Seeder
     public function run(): void
     {
         $kemajuan1 = Kemajuan::create([
-            'member_id' => 1,
+            'members_id' => 1,
             'nama_latihan' => 'Bench Press',
             'tanggal_workout' => '2025-09-22',
             'jumlah_set' => 3,
@@ -31,7 +31,7 @@ class KemajuanSeeder extends Seeder
         }
 
         $kemajuan2 = Kemajuan::create([
-            'member_id' => 1,
+            'members_id' => 1,
             'nama_latihan' => 'Lari Pagi',
             'tanggal_workout' => '2025-09-21',
             'jumlah_set' => 1,

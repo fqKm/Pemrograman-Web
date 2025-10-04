@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Membership extends Model
 {
@@ -17,4 +18,9 @@ class Membership extends Model
         'nama_plan',
         'deskripsi',
     ];
+
+    public function members(): HasMany
+    {
+        return $this->hasMany(Member::class);
+    }
 }
