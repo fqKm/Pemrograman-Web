@@ -16,11 +16,10 @@ class DatabaseSeeder extends Seeder
         // User::factory(10)->create();
 
         $this->call([
-            MemberSeeder::class,
             PembayaranSeeder::class,
             PemesananSeeder::class,
-            MemberSeeder::class,
             MembershipSeeder::class,
+            MemberSeeder::class,
             LanggananSeeder::class,
             AlatSeeder::class,
             KemajuanSeeder::class,
