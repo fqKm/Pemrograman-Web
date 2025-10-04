@@ -23,6 +23,8 @@ class DatabaseSeeder extends Seeder
             LanggananSeeder::class,
             AlatSeeder::class,
             KemajuanSeeder::class,
+            PelatihSeeder::class,
+            KelasSeeder::class
         ]);
         User::factory()->create([
             'name' => 'Test User',

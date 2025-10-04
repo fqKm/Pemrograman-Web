@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Pelatih extends Model
 {
@@ -15,4 +16,10 @@ class Pelatih extends Model
         'spesialisasi',
         'tanggal_masuk'];
     public $timestamps = true;
+        
+    public function kelas(): HasMany
+    {
+        return $this->hasMany(Kelas::class, 'pelatih_id');
+    }
+
 }
