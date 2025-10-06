@@ -3,6 +3,7 @@
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\KelasController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\PelatihController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -15,6 +16,7 @@ Route::get('/dashboard', function () {
 
 Route::resource('members', MemberController::class);
 Route::resource('kelas', KelasController::class);
+Route::resource('pelatih', PelatihController::class);
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

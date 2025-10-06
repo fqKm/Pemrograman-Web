@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Pelatih;
+use App\Models\Kelas;
 
 class PelatihController extends Controller
 {
@@ -11,7 +13,8 @@ class PelatihController extends Controller
      */
     public function index()
     {
-        //
+        $pelatihs = Pelatih::latest()->paginate(10);
+        return view('pelatih.index', compact('pelatihs'));
     }
 
     /**
@@ -19,7 +22,7 @@ class PelatihController extends Controller
      */
     public function create()
     {
-        //
+        return view('pelatih.create');
     }
 
     /**
@@ -27,38 +30,62 @@ class PelatihController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'nama_pelatih' => 'required|string|max:100',
+            'spesialisasi' => 'nullable|string|max:100',
+            'tanggal_masuk' => 'required|date',
+        ]);
+
+        Pelatih::create($request->all());
+
+        return redirect()->route('pelatih.index')->with('success', 'Pelatih baru berhasil ditambahkan!');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Pelatih $pelatih)
     {
-        //
+        $pelatih->load('kelas'); 
+        return view('pelatih.view', compact('pelatih'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Pelatih $pelatih)
     {
-        //
+        return view('pelatih.edit', compact('pelatih'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Pelatih $pelatih)
     {
-        //
+        $request->validate([
+            'nama_pelatih' => 'required|string|max:100',
+            'spesialisasi' => 'nullable|string|max:100',
+            'tanggal_masuk' => 'required|date',
+        ]);
+
+        $pelatih->update($request->all());
+
+        return redirect()->route('pelatih.index')->with('success', 'Data pelatih berhasil diupdate!');
+
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Pelatih $pelatih)
     {
-        //
+        if ($pelatih->kelas()->exists()) {
+            return redirect()->route('pelatih.index')->with('error', 'Gagal! Pelatih ini tidak bisa dihapus karena masih terdaftar di sebuah kelas.');
+        }
+
+        $pelatih->delete();
+
+        return redirect()->route('pelatih.index')->with('success', 'Pelatih berhasil dihapus!');
     }
 }
