@@ -12,7 +12,7 @@ class Kelas extends Model
     protected $keyType = 'int';
 
     protected $fillable = [
-        'id_pelatih',
+        'pelatih_id',
         'nama_kelas',
         'waktu_mulai',
         'waktu_selesai',
@@ -24,6 +24,6 @@ class Kelas extends Model
     // Relasi: Kelas dimiliki oleh satu Pelatih
     public function pelatih()
     {
-        return $this->belongsTo(Pelatih::class, 'id_pelatih', 'id');
+        return $this->belongsTo(Pelatih::class, 'pelatih_id', 'id');
     }
 }

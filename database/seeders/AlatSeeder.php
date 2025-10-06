@@ -18,7 +18,7 @@ class AlatSeeder extends Seeder
                 'nama_alat' => 'Dumbell 10kg',
                 'tipe' => 'Beban',
                 'status' => 'Aktif',
-                'tanggal_pembelian' => '10-01-2023',
+                'tanggal_pembelian' => '2023-01-10',
                 'created_at' => now(),
                 'updated_at' => now()
             ],
@@ -26,7 +26,7 @@ class AlatSeeder extends Seeder
                 'nama_alat' => 'Treadmill',
                 'tipe' => 'Kardio',
                 'status' => 'Aktif',
-                'tanggal_pembelian' => '05-11-2022',
+                'tanggal_pembelian' => '2022-11-05',
                 'created_at' => now(),
                 'updated_at' => now()
             ],
@@ -34,7 +34,7 @@ class AlatSeeder extends Seeder
                 'nama_alat' => 'Bench Press Rack',
                 'tipe' => 'Kekuatan',
                 'status' => 'Dalam Perbaikan',
-                'tanggal_pembelian' => '20-08-2022',
+                'tanggal_pembelian' => '2022-08-20',
                 'created_at' => now(),
                 'updated_at' => now()
             ]
