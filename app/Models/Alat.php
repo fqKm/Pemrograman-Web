@@ -10,7 +10,7 @@ class Alat extends Model
     use HasFactory;
 
     protected $table = 'alat';
-    protected $primaryKey = 'alat';
+    protected $primaryKey = 'id';
 
     protected $fillable = [
         'nama_alat',
@@ -20,13 +20,13 @@ class Alat extends Model
         'tanggal_perawatan_terakhir',
     ];
 
-        public function kemajuan()
+    public function kemajuan()
     {
         return $this->belongsToMany(
-            Alat::class,
+            Kemajuan::class,
             'kemajuan_alat',
-            'kemajuan_id',
-            'alat_id'
+            'alat_id',
+            'kemajuan_id'
         );
     }
 }

@@ -5,7 +5,7 @@ namespace Database\Seeders;
 use App\Models\Pembayaran;
 use App\Models\Pemesanan;
 use App\Models\Member;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Carbon\Carbon;
 
@@ -16,30 +16,23 @@ class PembayaranSeeder extends Seeder
      */
     public function run(): void
     {
-        $members = Member::take(3)->get();
+        $member = Member::first();
 
-        $dataPembayaran = [
-            [
-                'member_id' => $members[0]->member_id,
+        if ($member) {
+            $pembayaran = Pembayaran::create([
+                'member_id' => $member->id,      // ganti member_id
                 'jumlah' => 150000,
                 'metode_pembayaran' => 'tunai',
-                'waktu_pembayaran' => Carbon::now()->subDays(1)
-            ],
-            [
-                'member_id' => $members[1]->member_id,
-                'jumlah' => 200000,
-                'metode_pembayaran' => 'transfer',
                 'waktu_pembayaran' => Carbon::now()
-            ]
-        ];
+            ]);
 
-        foreach ($dataPembayaran as $data){
-            $pembayaran = Pembayaran::create($data);
+            $pemesanan = Pemesanan::where('member_id', $member->id)
+                ->where('status', 'proses')
+                ->first();
 
-            $pemesanan = Pemesanan::where('member_id', $data['member_id'])->where('status', 'proses')->first();
-            if($pemesanan){
+            if ($pemesanan) {
                 $pemesanan->update([
-                    'pembayaran_id' => $pembayaran->pembayaran_id,
+                    'pembayaran_id' => $pembayaran->id,
                     'status' => 'terkonfirmasi'
                 ]);
             }

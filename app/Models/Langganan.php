@@ -16,21 +16,22 @@ class Langganan extends Model
         'tanggal_berakhir',
         'pembayaran_id',
         'membership_id',
-        'members_id'
+        'member_id'
     ];
 
-    function pembayaran()
+    public function pembayaran()
     {
-        $this->belongsTo(Pembayaran::class, 'pembayaran_id', 'id');
+        return $this->belongsTo(Pembayaran::class, 'pembayaran_id', 'id');
 
     }
-    function membership()
+    public function membership()
     {
-        $this->belongsTo(Membership::class, 'membership_id', 'id');
+        return $this->belongsTo(Membership::class, 'membership_id', 'id');
 
     }
 
-    public function members(){
-        return $this->belongsTo(Member::class, 'members_id', 'id');
+    public function member()
+    {
+        return $this->belongsTo(Member::class, 'member_id', 'id');
     }
 }

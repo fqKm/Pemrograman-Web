@@ -30,6 +30,6 @@ class Member extends Model
 
     public function kemajuan()
     {
-        return $this->hasMany(Kemajuan::class, 'members_id');
+        return $this->hasMany(Kemajuan::class, 'member_id');
     }
 }
