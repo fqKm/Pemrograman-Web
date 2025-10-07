@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('kemajuan', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('members_id')->constrained('members');
+            $table->foreignId('member_id')->constrained('members');
             $table->string('nama_latihan');
             $table->date('tanggal_workout');
             $table->integer('jumlah_set');

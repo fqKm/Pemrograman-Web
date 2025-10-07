@@ -12,11 +12,11 @@ class Pembayaran extends Model
     protected $table = 'pembayaran';
     protected $primaryKey = 'id';
     protected $keyType = 'int';
-    public $incrementing = 'true';
-    public $timestamps = 'true';
+    public $incrementing = true;
+    public $timestamps = true;
 
     protected $fillable = [
-        'members_id',
+        'member_id',
         'jumlah',
         'metode_pembayaran',
         'waktu_pembayaran'
@@ -28,16 +28,16 @@ class Pembayaran extends Model
 
     public function pemesanan()
     {
-        return $this->hasOne(Pemesanan::class, 'pembayaran_id');
+        return $this->hasOne(Pemesanan::class);
     }
 
     public function member()
     {
-        return $this->belongsTo(Member::class, 'members_id', 'id');
+        return $this->belongsTo(Member::class);
     }
 
     public function langganan()
     {
-        return $this->hasOne(Langganan::class, 'pembayaran_id');
+        return $this->hasOne(Langganan::class);
     }
 }

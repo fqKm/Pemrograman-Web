@@ -15,7 +15,7 @@ class Kemajuan extends Model
 
 
     protected $fillable = [
-        'members_id',
+        'member_id',
         'nama_latihan',
         'tanggal_workout',
         'jumlah_set',
@@ -37,6 +37,6 @@ class Kemajuan extends Model
 
     public function member(): BelongsTo
     {
-        return $this->belongsTo(Member::class, 'members_id');
+        return $this->belongsTo(Member::class, 'member_id');
     }
 }

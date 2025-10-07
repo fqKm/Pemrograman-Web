@@ -12,10 +12,14 @@ class Pemesanan extends Model
     protected $table = 'pemesanan';
     protected $primaryKey = 'id';
     protected $keyType = 'int';
-    public $incrementing = 'true';
-    public $timestamps = 'true';
+    public $incrementing = true;
+    public $timestamps = true;
     protected $fillable = [
-        'pembayaran_id', 'membera_id', 'kelas_id', 'tanggal_pemesanan', 'status'
+        'pembayaran_id',
+        'member_id',
+        'kelas_id',
+        'tanggal_pemesanan',
+        'status'
     ];
     protected $casts = [
         'tanggal_pemesanan' => 'date',
@@ -23,16 +27,16 @@ class Pemesanan extends Model
 
     public function pembayaran()
     {
-        return $this->belongsTo(Pembayaran::class, 'pembayaran_id');
+        return $this->belongsTo(Pembayaran::class);
     }
 
     public function member()
     {
-        return $this->belongsTo(Member::class, 'members_id');
+        return $this->belongsTo(Member::class);
     }
 
     public function kelas()
     {
-        return $this->belongsTo(Kelas::class, 'kelas_id');
+        return $this->belongsTo(Kelas::class);
     }
 }
