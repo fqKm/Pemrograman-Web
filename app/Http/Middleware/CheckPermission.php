@@ -20,7 +20,7 @@ class CheckPermission
         }
 
         $user = auth()->user();
-        if($user->hasPermission($permission)){
+        if(!$user->hasPermission($permission)){
             abort(403, 'You do not have permission to access this resource.');
         }
         return $next($request);
