@@ -7,12 +7,14 @@
     </x-slot>
 
 <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+@if(auth()->user()->hasPermission('buat_member'))
     <div class="flex justify-between items-center mb-4">
         <h1 class="text-2xl font-semibold text-gray-800">Daftar Member</h1>
         <a href="{{ route('members.create') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
             Tambah Member Baru
-        </a>
+        </a> 
     </div>
+@endif
 
     @if(session('success'))
         <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">
@@ -65,12 +67,16 @@
                 
                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                             <a href="{{ route('members.show', $member) }}" class="text-green-600 hover:text-green-900 mr-3">Show</a>
+                            @if(auth()->user()->hasPermission('ubah_member'))
                             <a href="{{ route('members.edit', $member) }}" class="text-indigo-600 hover:text-indigo-900 mr-3">Edit</a>
+                            @endif
+                            @if(auth()->user()->hasPermission('hapus_member'))
                             <form action="{{ route('members.destroy', $member) }}" method="POST" class="inline" onsubmit="return confirm('Apakah Anda yakin ingin menghapus data ini?');">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="text-red-600 hover:text-red-900">Delete</button>
                             </form>
+                            @endif
                         </td>
                     </tr>
                 @empty
