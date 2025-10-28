@@ -16,17 +16,23 @@
                         {{ __('Dashboard') }}
                     </x-nav-link>
 
+                    @if(auth()->user()->hasPermission('lihat_akun_member'))
                     <x-nav-link :href="route('members.index')" :active="request()->routeIs('members.*')">
                         {{ __('Member') }}
                     </x-nav-link>
+                    @endif
 
+                    @if(auth()->user()->hasPermission('lihat_kelas'))
                     <x-nav-link :href="route('kelas.index')" :active="request()->routeIs('kelas.*')">
                         {{ __('Kelas') }}
                     </x-nav-link>
+                    @endif
 
+                    @if(auth()->user()->hasPermission('lihat_akun_pelatih'))
                     <x-nav-link :href="route('pelatih.index')" :active="request()->routeIs('pelatih.*')">
                         {{ __('Pelatih') }}
                     </x-nav-link>
+                    @endif
                 </div>
             </div>
 
