@@ -37,7 +37,7 @@
                     <div class="bg-white p-6 rounded-lg shadow-sm">
                         <div class="text-sm font-medium text-gray-500 mb-2">Next Class</div>
                         <div class="text-4xl font-bold text-gray-900">2:00 PM</div>
-                        <div class="text-xs text-gray-400 mt-2">HIIT Training</div>
+                        <div class="text-xs text-gray-400 mt-2">HIIT Traxining</div>
                     </div>
                 </div>
 

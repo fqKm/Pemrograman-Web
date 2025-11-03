@@ -26,6 +26,6 @@ class PelatihDashboardController extends Controller
         // $kelasDiajar = $pelatih->kelas()->paginate(5);
 
         // // 4. Tampilkan view dan kirim datanya
-        return view('dashboard');
+        return view('pelatih.dashboard', compact('pelatih', 'kelasDiajar'));
     }
 }
