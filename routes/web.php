@@ -4,15 +4,29 @@ use App\Http\Controllers\MemberController;
 use App\Http\Controllers\KelasController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PelatihController;
+use App\Http\Controllers\PelatihDashboardController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 
 Route::get('/', function () {
     return view('welcome');
 });
 
 Route::get('/dashboard', function () {
+    $user = auth()->user();
+
+    // Cek jika rolenya adalah 'pelatih'
+    // Kita gunakan helper 'isTrainer()' dari model User.php Anda
+    if ($user->isTrainer()) {
+        return redirect()->route('pelatih.dashboard');
+    }
+
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::view('/pelatih/dashboard', 'pelatih.dashboard')
+    ->middleware(['auth', 'permission:lihat_akun_pelatih'])
+    ->name('pelatih.dashboard');
 
 Route::resource('members', MemberController::class);
 Route::resource('kelas', KelasController::class);

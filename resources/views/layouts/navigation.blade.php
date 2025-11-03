@@ -12,21 +12,37 @@
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                        {{ __('Dashboard') }}
-                    </x-nav-link>
+                    @if(Auth::user()->isAdmin())
+                        <x-nav-link :href="route('dashboard')" :active="request()->routeIs('*.dashboard')">
+                            {{ __('Dashboard') }}
+                        </x-nav-link>
 
-                    <x-nav-link :href="route('members.index')" :active="request()->routeIs('members.*')">
-                        {{ __('Member') }}
-                    </x-nav-link>
+                        <x-nav-link :href="route('members.index')" :active="request()->routeIs('members.*')">
+                            {{ __('Member') }}
+                        </x-nav-link>
 
-                    <x-nav-link :href="route('kelas.index')" :active="request()->routeIs('kelas.*')">
-                        {{ __('Kelas') }}
-                    </x-nav-link>
+                        <x-nav-link :href="route('kelas.index')" :active="request()->routeIs('kelas.*')">
+                            {{ __('Kelas') }}
+                        </x-nav-link>
 
-                    <x-nav-link :href="route('pelatih.index')" :active="request()->routeIs('pelatih.*')">
-                        {{ __('Pelatih') }}
-                    </x-nav-link>
+                        <x-nav-link :href="route('pelatih.index')" :active="request()->routeIs('pelatih')">
+                            {{ __('Pelatih') }}
+                        </x-nav-link>
+                    @endif
+
+                    @if(Auth::user()->isTrainer())
+                        <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard.*')">
+                            {{ __('Dashboard') }}
+                        </x-nav-link>
+                        
+                    @endif
+
+                    @if(Auth::user()->isMember())
+                        <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+                            {{ __('Dashboard') }}
+                        </x-nav-link>
+                    @endif
+
                 </div>
             </div>
 

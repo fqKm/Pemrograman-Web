@@ -1,3 +1,377 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+:root {
+    --primary: 24 85% 60%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 270 50% 25%;
+    --secondary-foreground: 0 0% 100%;
+    --accent: 270 60% 70%;
+    --accent-foreground: 270 50% 15%;
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 24 85% 60%;
+    --radius: 0.5rem;
+}
+
+.dark {
+    --primary: 24 85% 60%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 270 50% 25%;
+    --secondary-foreground: 0 0% 100%;
+    --accent: 270 60% 70%;
+    --accent-foreground: 270 50% 15%;
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 24 85% 60%;
+}
+
+* {
+    border-color: hsl(var(--border));
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 1.5rem;
+}
+
+.card {
+    background-color: hsl(var(--card));
+    border: 1px solid hsl(var(--border));
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+}
+
+.btn-primary {
+    background-color: hsl(var(--primary));
+    color: hsl(var(--primary-foreground));
+    padding: 0.5rem 1rem;
+    border-radius: var(--radius);
+    border: none;
+    cursor: pointer;
+    font-weight: 500;
+    transition: opacity 0.2s;
+}
+
+.btn-primary:hover {
+    opacity: 0.9;
+}
+
+.badge {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 500;
+}
+
+.badge-success {
+    background-color: hsl(142 76% 36%);
+    color: white;
+}
+
+.badge-warning {
+    background-color: hsl(48 96% 53%);
+    color: hsl(222.2 84% 4.9%);
+}
+
+.hero-section {
+    position: relative;
+    height: 300px;
+    border-radius: var(--radius);
+    overflow: hidden;
+    margin-bottom: 2rem;
+}
+
+.hero-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.4), rgba(0,0,0,0.7));
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 2rem;
+    color: white;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.stat-card {
+    background: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(24 85% 50%) 100%);
+    color: white;
+    padding: 1.5rem;
+    border-radius: var(--radius);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.content-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 0.5rem;
+    background-color: hsl(var(--muted));
+    border-radius: 9999px;
+    overflow: hidden;
+    margin-top: 0.5rem;
+}
+
+.progress-fill {
+    height: 100%;
+    background-color: hsl(var(--primary));
+    transition: width 0.3s;
+}
+/* --- Judul Bagian --- */
+.section-title {
+    font-size: 1.75rem; /* 28px */
+    font-weight: 700;
+    color: var(--color-text-dark);
+    margin-bottom: 1.5rem;
+}
+
+/* --- Helper untuk Ikon --- */
+.icon {
+    width: 1.125rem; /* 18px */
+    height: 1.125rem; /* 18px */
+    stroke-width: 2;
+    margin-right: 0.5rem;
+    vertical-align: middle;
+    color: var(--color-text-light);
+}
+
+/* --- Bagian: Upcoming Classes --- */
+.classes-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(320px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+}
+
+.class-card {
+    background-color: white;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    padding: 1.5rem;
+    border: 1px solid var(--color-border);
+}
+
+.class-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.class-card-header h3 {
+    margin: 0;
+    font-size: 1.25rem; /* 20px */
+    font-weight: 600;
+    color: var(--color-text-dark);
+}
+
+.class-card-header a {
+    text-decoration: none;
+    color: var(--color-text-medium);
+    font-weight: 500;
+    font-size: 0.875rem; /* 14px */
+}
+.class-card-header a:hover {
+    color: var(--color-primary-orange);
+}
+
+.class-tag {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 0.75rem; /* 12px */
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 1.25rem;
+}
+
+.tag-ongoing {
+    background-color: #fff7ed;
+    color: #f97316;
+}
+
+.tag-scheduled {
+    background-color: #eff6ff;
+    color: #3b82f6;
+}
+
+.class-details p {
+    display: flex;
+    align-items: center;
+    margin: 0.5rem 0;
+    font-size: 0.875rem; /* 14px */
+}
+
+.class-details p span {
+    color: var(--color-text-medium);
+    font-weight: 500;
+}
+
+/* --- Bagian: Recent Students --- */
+.students-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(400px, 1fr));
+    gap: 1.5rem;
+}
+
+.student-card {
+    background-color: white;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    padding: 1.5rem;
+    border: 1px solid var(--color-border);
+}
+
+.student-info-top {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.student-avatar {
+    width: 3.5rem; /* 56px */
+    height: 3.5rem; /* 56px */
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem; /* 20px */
+    font-weight: 600;
+    margin-right: 1rem;
+    color: var(--color-white);
+}
+
+/* Warna Avatar */
+.avatar-sj { background-color: #fed7aa; color: #c2410c; }
+.avatar-mc { background-color: #fecaca; color: #b91c1c; }
+.avatar-ed { background-color: #fecaca; color: #b91c1c; } /* Sama dengan MC di gambar */
+.avatar-jw { background-color: #bfdbfe; color: #1e40af; }
+
+
+.student-meta h4 {
+    margin: 0 0 0.25rem 0;
+    font-size: 1.125rem; /* 18px */
+    font-weight: 600;
+    color: var(--color-text-dark);
+}
+
+.student-meta p {
+    margin: 0;
+    font-size: 0.875rem; /* 14px */
+    color: var(--color-text-light);
+}
+
+.progress-section {
+    margin-bottom: 1.5rem;
+}
+
+.progress-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.progress-header span:first-child {
+    font-size: 0.875rem; /* 14px */
+    font-weight: 500;
+    color: var(--color-text-medium);
+}
+
+.progress-header span:last-child {
+    font-size: 1rem; /* 16px */
+    font-weight: 700;
+    color: var(--color-text-dark);
+}
+
+.progress-bar-container {
+    width: 100%;
+    height: 10px;
+    background-color: var(--color-primary-blue-dark);
+    border-radius: 9999px;
+    overflow: hidden;
+}
+
+.progress-bar {
+    height: 100%;
+    background-color: var(--color-primary-orange);
+    border-radius: 9999px;
+    transition: width 0.3s ease-in-out;
+}
+
+.student-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.875rem; /* 14px */
+}
+
+.student-footer .sessions {
+    display: flex;
+    align-items: center;
+    color: var(--color-text-light);
+    font-weight: 500;
+}
+
+.student-footer .view-details-link {
+    text-decoration: none;
+    color: var(--color-text-dark);
+    font-weight: 600;
+}
+.student-footer .view-details-link:hover {
+    color: var(--color-primary-orange);
+}
