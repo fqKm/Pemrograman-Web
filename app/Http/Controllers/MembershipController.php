@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Membership;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Mockery\Exception;
 
 class MembershipController extends Controller
 {
@@ -11,7 +14,11 @@ class MembershipController extends Controller
      */
     public function index()
     {
-        //
+        $membership = Membership::paginate(10);
+        if($membership->total() == 0){
+            return view('membership.index')->with('message', "Membership Not Found Please, Make One of Them");
+        }
+        return view('membership.index', compact('membership'));
     }
 
     /**
@@ -19,7 +26,7 @@ class MembershipController extends Controller
      */
     public function create()
     {
-        //
+        return view('membership.create');
     }
 
     /**
@@ -27,7 +34,14 @@ class MembershipController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'nama_plan' => 'required|string|max:255',
+            'durasi' => 'required',
+            'harga' => 'required',
+        ]);
+        $membership = Membership::create($request->all());
+        return redirect()->route('membership.index')
+            ->with('success', 'Membership Berhasil Dibuat');
     }
 
     /**
@@ -35,7 +49,15 @@ class MembershipController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $membership = Membership::with('members')->find($id);
+        foreach ($membership->members as $member){
+            var_dump($member->nama);
+        }
+        if (!$membership) {
+            return redirect()->route('membership.index')
+                ->with('error', 'Membership yang Anda cari tidak ditemukan.');
+        }
+        return view('membership.view', compact('membership'));
     }
 
     /**
@@ -43,7 +65,12 @@ class MembershipController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $membership = Membership::find($id);
+        if (!$membership) {
+            return redirect()->route('membership.index')
+                ->with('error', 'Membership yang Anda cari tidak ditemukan.');
+        }
+        return view('membership.edit', compact('membership'));
     }
 
     /**
@@ -51,7 +78,19 @@ class MembershipController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $request->validate([
+            'nama_plan' => 'required|string|max:255',
+            'durasi' => 'required',
+            'harga' => 'required',
+        ]);
+        $membership = Membership::find($id);
+        if (!$membership) {
+            return redirect()->route('membership.index')
+                ->with('error', 'Membership yang Anda cari tidak ditemukan.');
+        }
+        $membership->update($request);
+        return redirect()->route('membership.index')
+            ->with('success', 'Membership Berhasil Diupdate');
     }
 
     /**
@@ -59,6 +98,17 @@ class MembershipController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $membership = Membership::find($id);
+        DB::beginTransaction();
+        try {
+            $membership->delete();
+            return redirect()->route('membership.index')
+                ->with('success', 'Membership Berhasil Dihapus');
+            DB::commit();
+        } catch (Exception $exception) {
+            DB::rollBack();
+            return redirect()->route('membership.index')
+                ->with('error', 'gagal menghapus data'.$exception->getMessage());
+        }
     }
 }

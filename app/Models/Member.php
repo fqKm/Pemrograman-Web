@@ -28,6 +28,12 @@ class Member extends Model
         return $this->belongsTo(Membership::class);
     }
 
+    public function langganan()
+    {
+        return $this->hasMany(Langganan::class, 'member_id', 'id');
+    }
+
+
     public function kemajuan()
     {
         return $this->hasMany(Kemajuan::class, 'member_id');

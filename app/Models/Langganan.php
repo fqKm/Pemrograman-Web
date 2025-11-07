@@ -30,7 +30,7 @@ class Langganan extends Model
 
     }
 
-    public function member()
+    public function members()
     {
         return $this->belongsTo(Member::class, 'member_id', 'id');
     }
