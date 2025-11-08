@@ -50,9 +50,6 @@ class MembershipController extends Controller
     public function show(string $id)
     {
         $membership = Membership::with('members')->find($id);
-        foreach ($membership->members as $member){
-            var_dump($member->nama);
-        }
         if (!$membership) {
             return redirect()->route('membership.index')
                 ->with('error', 'Membership yang Anda cari tidak ditemukan.');
@@ -88,7 +85,7 @@ class MembershipController extends Controller
             return redirect()->route('membership.index')
                 ->with('error', 'Membership yang Anda cari tidak ditemukan.');
         }
-        $membership->update($request);
+        $membership->update($request->all());
         return redirect()->route('membership.index')
             ->with('success', 'Membership Berhasil Diupdate');
     }
@@ -101,10 +98,10 @@ class MembershipController extends Controller
         $membership = Membership::find($id);
         DB::beginTransaction();
         try {
+            DB::commit();
             $membership->delete();
             return redirect()->route('membership.index')
                 ->with('success', 'Membership Berhasil Dihapus');
-            DB::commit();
         } catch (Exception $exception) {
             DB::rollBack();
             return redirect()->route('membership.index')

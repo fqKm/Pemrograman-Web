@@ -15,21 +15,21 @@ class MembershipSeeder extends Seeder
     {
         Membership::create([
             'harga' => 150000.00,
-            'durasi' => 1000 * 60 * 60 * 24 * 30,
+            'durasi' => 30,
             'nama_plan' => 'Diamond',
             'deskripsi' => 'Diamond',
         ]);
 
         Membership::create([
             'harga' => 100000.00,
-            'durasi' => 1000 * 60 * 60 * 24 * 14,
+            'durasi' => 14,
             'nama_plan' => 'Platinum',
             'deskripsi' => 'Platinum',
         ]);
 
         Membership::create([
             'harga' => 50000.00,
-            'durasi' => 1000 * 60 * 60 * 24 * 7,
+            'durasi' => 7,
             'nama_plan' => 'Bronze',
             'deskripsi' => 'Bronze',
         ]);

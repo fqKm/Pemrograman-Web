@@ -34,7 +34,6 @@ Route::resource('kelas', KelasController::class);
 Route::resource('pelatih', PelatihController::class);
 
 Route::middleware('auth')->group(function () {
-    Route::get('/membership/{id}', [MembershipController::class, 'show'])->name('membership.show');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
@@ -66,11 +65,6 @@ Route::middleware(['auth', 'permission:hapus_kelas'])->group(function () {
     Route::delete('/kelas/{id}', [KelasController::class, 'destroy'])->name('kelas.destroy');
 });
 
-
-Route::middleware(['auth', 'permission:lihat_daftar_membership'])->group(function () {
-    Route::get('/membership', [MembershipController::class, 'index'])->name('membership.index');
-});
-
 Route::middleware(['auth', 'permission:lihat_member_membership'])->group(function () {
 });
 
@@ -87,6 +81,12 @@ Route::middleware(['auth', 'permission:ubah_membership'])->group(function () {
 Route::middleware(['auth', 'permission:hapus_membership'])->group(function () {
     Route::delete('/membership/{id}', [MembershipController::class, 'destroy'])->name('membership.destroy');
 });
+
+Route::middleware(['auth', 'permission:lihat_daftar_membership'])->group(function () {
+    Route::get('/membership', [MembershipController::class, 'index'])->name('membership.index');
+    Route::get('/membership/{id}', [MembershipController::class, 'show'])->name('membership.show');
+});
+
 
 Route::middleware(['auth', 'permission:buat_progress'])->group(function () {
 });

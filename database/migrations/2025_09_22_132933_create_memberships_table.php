@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('membership', function (Blueprint $table) {
             $table->id();
             $table->float('harga');
-            $table->bigInteger('durasi');
+            $table->integer('durasi');
             $table->string('nama_plan');
             $table->string('deskripsi');
             $table->timestamps();

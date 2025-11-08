@@ -37,17 +37,15 @@ class Membership extends Model
             ->withTimestamps();
     }
 
-
-
     public function getFormattedDurationAttribute()
     {
-        $milliseconds = $this->attributes['durasi'];
+        $day = $this->attributes['durasi'];
 
-        if (is_null($milliseconds) || !is_numeric($milliseconds)) {
+        if (is_null($day) || !is_numeric($day)) {
             return 'N/A';
         }
 
-        $interval = CarbonInterval::milliseconds($milliseconds);
+        $interval = CarbonInterval::day($day);
 
         $interval->cascade();
 
