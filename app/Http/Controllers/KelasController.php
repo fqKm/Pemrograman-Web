@@ -14,7 +14,7 @@ class KelasController extends Controller
     public function index()
     {
         $kelass = Kelas::with('pelatih')->latest()->get();
-        return view('kelas.index', compact('kelass'));
+        return view('admin.kelas.index', compact('kelass'));
     }
 
     /**
@@ -23,7 +23,7 @@ class KelasController extends Controller
     public function create()
     {
         $pelatihs = Pelatih::all();
-        return view('kelas.create', compact('pelatihs'));
+        return view('admin.kelas.create', compact('pelatihs'));
     }
 
     /**
@@ -42,7 +42,7 @@ class KelasController extends Controller
 
         Kelas::create($request->all());
 
-        return redirect()->route('kelas.index')->with('success', 'Kelas baru berhasil ditambahkan!');
+        return redirect()->route('admin.kelas.index')->with('success', 'Kelas baru berhasil ditambahkan!');
     }
 
     /**
@@ -51,7 +51,7 @@ class KelasController extends Controller
     public function show(Kelas $kela)
     {
         $kela->load('pelatih');
-        return view('kelas.view', compact('kela'));
+        return view('admin.kelas.view', compact('kela'));
     }
 
     /**
@@ -60,7 +60,7 @@ class KelasController extends Controller
     public function edit(Kelas $kela)
     {
         $pelatihs = Pelatih::all();
-        return view('kelas.edit', compact('kela', 'pelatihs'));
+        return view('admin.kelas.edit', compact('kela', 'pelatihs'));
     }
 
     /**
@@ -79,7 +79,7 @@ class KelasController extends Controller
 
         $kela->update($request->all());
 
-        return redirect()->route('kelas.index')->with('success', 'Data kelas berhasil diupdate!');
+        return redirect()->route('admin.kelas.index')->with('success', 'Data kelas berhasil diupdate!');
     }
 
     /**
@@ -88,7 +88,7 @@ class KelasController extends Controller
     public function destroy(Kelas $kela)
     {
         $kela->delete();
-        return redirect()->route('kelas.index')->with('success', 'Kelas berhasil dihapus!');
+        return redirect()->route('admin.kelas.index')->with('success', 'Kelas berhasil dihapus!');
     }
 
 
