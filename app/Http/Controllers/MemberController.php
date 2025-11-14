@@ -14,7 +14,7 @@ class MemberController extends Controller
     public function index()
     {
         $members = Member::with('membership')->latest()->paginate(10);
-        return view('members.index', compact('members'));
+        return view('admin.members.index', compact('members'));
     }
 
     /**
@@ -23,7 +23,7 @@ class MemberController extends Controller
     public function create()
     {
         $memberships = Membership::all(); 
-        return view('members.create', compact('memberships'));
+        return view('admin.members.create', compact('memberships'));
     }
 
     /**
@@ -43,7 +43,7 @@ class MemberController extends Controller
 
         Member::create($request->all());
 
-        return redirect()->route('members.index')
+        return redirect()->route('admin.members.index')
                          ->with('success', 'Member baru berhasil ditambahkan!');
     }
 
@@ -52,7 +52,7 @@ class MemberController extends Controller
      */
     public function show(Member $member)
     {
-        return view('members.view', compact('member'));
+        return view('admin.members.view', compact('member'));
     }
 
     /**
@@ -61,7 +61,7 @@ class MemberController extends Controller
     public function edit(Member $member)
     {
         $memberships = Membership::all(); 
-        return view('members.edit', compact('member', 'memberships'));
+        return view('admin.members.edit', compact('member', 'memberships'));
     }
 
     /**
@@ -81,7 +81,7 @@ class MemberController extends Controller
 
         $member->update($request->all());
 
-        return redirect()->route('members.index')
+        return redirect()->route('admin.members.index')
                          ->with('success', 'Data member berhasil diupdate!');
     }
 
@@ -93,7 +93,7 @@ class MemberController extends Controller
 
         $member->kemajuan()->delete();
         $member->delete();
-        return redirect()->route('members.index')
+        return redirect()->route('admin.members.index')
                          ->with('success', 'Member dan semua data kemajuannya berhasil dihapus!');
     }
 }
