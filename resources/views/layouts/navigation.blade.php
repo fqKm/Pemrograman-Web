@@ -17,19 +17,19 @@
                             {{ __('Dashboard') }}
                         </x-nav-link>
 
-                        <x-nav-link :href="route('members.index')" :active="request()->routeIs('members.*')">
+                        <x-nav-link :href="route('admin.members.index')" :active="request()->routeIs('admin.members.*')">
                             {{ __('Member') }}
                         </x-nav-link>
 
-                        <x-nav-link :href="route('kelas.index')" :active="request()->routeIs('kelas.*')">
+                        <x-nav-link :href="route('admin.kelas.index')" :active="request()->routeIs('admin.kelas.*')">
                             {{ __('Kelas') }}
                         </x-nav-link>
 
-                        <x-nav-link :href="route('pelatih.index')" :active="request()->routeIs('pelatih.*')">
+                        <x-nav-link :href="route('admin.pelatih.index')" :active="request()->routeIs('admin.pelatih.*')">
                             {{ __('Pelatih') }}
                         </x-nav-link>
 
-                        <x-nav-link :href="route('membership.index')" :active="request()->routeIs('membership.*')">
+                        <x-nav-link :href="route('admin.membership.index')" :active="request()->routeIs('admin.membership.*')">
                             {{__('Membership')}}
                         </x-nav-link>
                     @endif
@@ -106,21 +106,21 @@
 
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
-            <x-responsive-nav-link :href="route('members.index')" :active="request()->routeIs('members.*')">
+            <x-responsive-nav-link :href="route('admin.members.index')" :active="request()->routeIs('admin.members.*')">
                 {{ __('Member') }}
             </x-responsive-nav-link>
         </div>
 
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
-            <x-responsive-nav-link :href="route('kelas.index')" :active="request()->routeIs('kelas.*')">
+            <x-responsive-nav-link :href="route('admin.kelas.index')" :active="request()->routeIs('admin.kelas.*')">
                 {{ __('Kelas') }}
             </x-responsive-nav-link>
         </div>
 
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
-            <x-responsive-nav-link :href="route('pelatih.index')" :active="request()->routeIs('pelatih.*')">
+            <x-responsive-nav-link :href="route('admin.pelatih.index')" :active="request()->routeIs('admin.pelatih.*')">
                 {{ __('Pelatih') }}
             </x-responsive-nav-link>
         </div>

@@ -8,7 +8,7 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="flex justify-end mb-4">
-                <a href="{{ route('pelatih.create') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                <a href="{{ route('admin.pelatih.create') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                     + Tambah Pelatih Baru
                 </a>
             </div>
@@ -42,9 +42,9 @@
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $pelatih->spesialisasi ?? '-' }}</td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ \Carbon\Carbon::parse($pelatih->tanggal_masuk)->format('d M Y') }}</td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                        <a href="{{ route('pelatih.show', $pelatih) }}" class="text-blue-600 hover:text-blue-900 mr-3">Show</a>
-                                        <a href="{{ route('pelatih.edit', $pelatih) }}" class="text-indigo-600 hover:text-indigo-900 mr-3">Edit</a>
-                                        <form action="{{ route('pelatih.destroy', $pelatih) }}" method="POST" class="inline" onsubmit="return confirm('Anda yakin?');">
+                                        <a href="{{ route('admin.pelatih.show', $pelatih) }}" class="text-blue-600 hover:text-blue-900 mr-3">Show</a>
+                                        <a href="{{ route('admin.pelatih.edit', $pelatih) }}" class="text-indigo-600 hover:text-indigo-900 mr-3">Edit</a>
+                                        <form action="{{ route('admin.pelatih.destroy', $pelatih) }}" method="POST" class="inline" onsubmit="return confirm('Anda yakin?');">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="text-red-600 hover:text-red-900">Delete</button>
