@@ -90,4 +90,6 @@ class KelasController extends Controller
         $kela->delete();
         return redirect()->route('kelas.index')->with('success', 'Kelas berhasil dihapus!');
     }
+
+
 }

@@ -6,6 +6,8 @@ use App\Http\Controllers\MembershipController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PelatihController;
 use App\Http\Controllers\PelatihDashboardController;
+use App\Http\Controllers\MemberDashboardController;
+
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -22,12 +24,20 @@ Route::get('/dashboard', function () {
         return redirect()->route('pelatih.dashboard');
     }
 
+    if ($user->isMember()) {
+        return redirect()->route('member.dashboard');
+    }
+
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::view('/pelatih/dashboard', 'pelatih.dashboard')
     ->middleware(['auth', 'permission:lihat_akun_pelatih'])
     ->name('pelatih.dashboard');
+
+Route::get('/members/dashboard', [MemberDashboardController::class, 'index'])
+    ->middleware(['auth', 'permission:lihat_akun_member'])
+    ->name('members.dashboard');
 
 Route::resource('members', MemberController::class);
 Route::resource('kelas', KelasController::class);
