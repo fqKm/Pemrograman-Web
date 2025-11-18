@@ -15,35 +15,33 @@ class KemajuanSeeder extends Seeder
     public function run(): void
     {
         $kemajuan1 = Kemajuan::create([
-            'member_id' => 1,
-            'nama_latihan' => 'Bench Press',
-            'tanggal_workout' => '2025-09-22',
-            'jumlah_set' => 3,
-            'jumlah_repetisi' => 10,
-            'beban' => 50,
-            'durasi' => 30,
-            'catatan' => 'Pemanasan 10 menit.',
-        ]);
-
-        $benchRack = Alat::where('nama_alat', 'Bench Press Rack')->first();
-        if ($benchRack) {
-            $kemajuan1->Alat()->attach($benchRack->alat_id);
-        }
-
-        $kemajuan2 = Kemajuan::create([
-            'member_id' => 1,
-            'nama_latihan' => 'Lari Pagi',
-            'tanggal_workout' => '2025-09-21',
+            'kelas_id' => 1,
+            'alat_id' => 1,
+            'nama_latihan' => 'Dumbell Press',
             'jumlah_set' => 1,
-            'jumlah_repetisi' => 1,
-            'beban' => 0,
-            'durasi' => 45,
+            'jumlah_repetisi' => 2,
+            'deskripsi' => 'Dumbell Press Deskripsi',
         ]);
 
-        $treadmill = Alat::where('nama_alat', 'Treadmill')->first();
-        if ($treadmill) {
-            $kemajuan2->Alat()->attach($treadmill->alat_id);
-        }
+//        $benchRack = Alat::where('nama_alat', 'Bench Press Rack')->first();
+//        if ($benchRack) {
+//            $kemajuan1->Alat()->attach($benchRack->alat_id);
+//        }
+
+//        $kemajuan2 = Kemajuan::create([
+//            'member_id' => 1,
+//            'nama_latihan' => 'Lari Pagi',
+//            'tanggal_workout' => '2025-09-21',
+//            'jumlah_set' => 1,
+//            'jumlah_repetisi' => 1,
+//            'beban' => 0,
+//            'durasi' => 45,
+//        ]);
+
+//        $treadmill = Alat::where('nama_alat', 'Treadmill')->first();
+//        if ($treadmill) {
+//            $kemajuan2->Alat()->attach($treadmill->alat_id);
+//        }
 
     }
 }

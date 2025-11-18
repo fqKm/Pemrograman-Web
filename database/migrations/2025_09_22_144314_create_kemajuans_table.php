@@ -13,14 +13,12 @@ return new class extends Migration
     {
         Schema::create('kemajuan', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('member_id')->constrained('members');
+            $table->foreignId('kelas_id')->constrained('kelas', 'id')->onDelete('cascade');
+            $table->foreignId('alat_id')->constrained('alat', 'id')->onDelete('cascade');
             $table->string('nama_latihan');
-            $table->date('tanggal_workout');
             $table->integer('jumlah_set');
             $table->integer('jumlah_repetisi');
-            $table->integer('beban')->comment('dalam kg');
-            $table->integer('durasi')->comment('dalam menit');
-            $table->text('catatan')->nullable();
+            $table->string('deskripsi');
             $table->timestamps();
         });
     }

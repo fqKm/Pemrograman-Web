@@ -16,6 +16,7 @@ class MemberSeeder extends Seeder
     {
         Member::create([
             'nama' => 'John Doe',
+            'user_id' => 2,
             'nomor_hp' => '0812345678',
             'email' => 'example@gmail.com',
             'tanggal_lahir' => Carbon::create('2000', '10', '31'),

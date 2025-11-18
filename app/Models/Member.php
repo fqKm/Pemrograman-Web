@@ -33,9 +33,8 @@ class Member extends Model
         return $this->hasMany(Langganan::class, 'member_id', 'id');
     }
 
-
-    public function kemajuan()
+    public function kelas()
     {
-        return $this->hasMany(Kemajuan::class, 'member_id');
+        return $this->belongsToMany(Kelas::class, 'kelas_member', 'member_id', 'kelas_id');
     }
 }

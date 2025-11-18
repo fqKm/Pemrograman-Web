@@ -11,15 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('kemajuan_member', function (Blueprint $table) {
+        Schema::create('kelas_member', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('kemajuan_id')->constrained('kemajuan', 'id')->onDelete('cascade');
+            $table->foreignId('kelas_id')->constrained('kelas', 'id')->onDelete('cascade');
             $table->foreignId('member_id')->constrained('members', 'id')->onDelete('cascade');
-            $table->string('deskripsi');
-            $table->boolean('is_done')->default(false);
-            $table->dateTime('completed_at')->nullable();
             $table->timestamps();
         });
+
     }
 
     /**
@@ -27,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('kemajuan_alat');
+        Schema::dropIfExists('kelas_member');
     }
 };

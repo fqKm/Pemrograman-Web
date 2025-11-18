@@ -9,7 +9,7 @@
 <div class="max-w-2xl mx-auto sm:px-6 lg:px-8">
     <div class="flex justify-between items-center mb-4">
         <h1 class="text-2xl font-semibold text-gray-800">Detail Member</h1>
-        <a href="{{ route('admin.members.index') }}" class="text-blue-500 hover:text-blue-700">
+        <a href="{{ route('members.index') }}" class="text-blue-500 hover:text-blue-700">
             &larr; Kembali ke Daftar
         </a>
     </div>
@@ -49,13 +49,13 @@
                 <div>
                     <span class="text-sm text-gray-500">Status:</span>
                     <p class="font-medium text-lg">
-                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
+                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full
                             {{ $member->status == 'aktif' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' }}">
                             {{ ucfirst($member->status) }}
                         </span>
                     </p>
                 </div>
-                
+
                 <div>
                     <span class="text-sm text-gray-500">Dibuat Pada:</span>
                     <p class="font-medium text-lg">{{ $member->created_at->format('d M Y, H:i') }}</p>

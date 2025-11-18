@@ -14,10 +14,9 @@ return new class extends Migration
         Schema::create('alat', function (Blueprint $table) {
             $table->id();
             $table->string('nama_alat');
-            $table->string('tipe');
-            $table->string('status');
+            $table->integer('jumlah');
+            $table->integer('terpakai')->default(0);
             $table->date('tanggal_pembelian');
-            $table->date('tanggal_perawatan_terakhir')->nullable();
             $table->timestamps();
         });
     }

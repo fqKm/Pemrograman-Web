@@ -12,31 +12,27 @@ class Kemajuan extends Model
 
     protected $table = 'kemajuan';
     protected $primaryKey = 'id';
-
-
     protected $fillable = [
-        'member_id',
+        'id',
+        'kelas_id',
+        'alat_id',
         'nama_latihan',
-        'tanggal_workout',
         'jumlah_set',
         'jumlah_repetisi',
-        'beban',
-        'durasi',
-        'catatan'
+        'deskripsi'
     ];
 
-    public function alat()
+    public function alat() : BelongsTo
     {
-        return $this->belongsToMany(
+        return $this->belongsTo(
             Alat::class,
-            'kemajuan_alat',
-            'kemajuan_id',
-            'alat_id'
+            'alat_id',
+            'id',
         );
     }
 
-    public function member(): BelongsTo
+    public function kelas(): BelongsTo
     {
-        return $this->belongsTo(Member::class, 'member_id');
+        return $this->belongsTo(Kelas::class, 'kelas_id', 'id');
     }
 }

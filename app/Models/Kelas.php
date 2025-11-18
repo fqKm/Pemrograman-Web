@@ -26,4 +26,8 @@ class Kelas extends Model
     {
         return $this->belongsTo(Pelatih::class, 'pelatih_id', 'id');
     }
+    public function member()
+    {
+        return $this->belongsToMany(Member::class, 'kelas_member', 'kelas_id', 'member_id');
+    }
 }

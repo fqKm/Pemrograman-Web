@@ -6,7 +6,7 @@
         <div class="max-w-2xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6">
-                    <form action="{{ route('admin.membership.store') }}" method="POST">
+                    <form action="{{ route('membership.store') }}" method="POST">
                         @csrf
                         <div class="mb-4">
                             <label for="nama_plan" class="block text-sm font-medium text-gray-700">Nama Membership</label>
@@ -32,7 +32,7 @@
                             @enderror
                         </div>
                         <div class="flex items-center justify-end mt-6">
-                            <a href="{{ route('admin.membership.index') }}" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded mr-2">Batal</a>
+                            <a href="{{ route('membership.index') }}" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded mr-2">Batal</a>
                             <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Simpan</button>
                         </div>
                     </form>

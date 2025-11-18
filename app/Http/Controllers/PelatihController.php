@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Pelatih;
 use App\Models\Kelas;
+use Illuminate\Support\Facades\Auth;
 
 class PelatihController extends Controller
 {
@@ -13,8 +14,14 @@ class PelatihController extends Controller
      */
     public function index()
     {
+        $user = Auth::user();
         $pelatihs = Pelatih::latest()->paginate(10);
-        return view('admin.pelatih.index', compact('pelatihs'));
+        return match ($user->role) {
+            'admin' => view('admin.pelatih.index', compact('pelatihs')),
+            'pelatih' => view('pelatih.pelatih.index', compact('pelatihs')),
+            'member' => view('member.pelatih.index', compact('pelatihs')),
+            default => view('pelatih.index', compact('pelatihs')),
+        };
     }
 
     /**
@@ -46,7 +53,7 @@ class PelatihController extends Controller
      */
     public function show(Pelatih $pelatih)
     {
-        $pelatih->load('kelas'); 
+        $pelatih->load('kelas');
         return view('admin.pelatih.view', compact('pelatih'));
     }
 

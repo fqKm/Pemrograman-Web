@@ -8,11 +8,11 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             @if(auth()->user()->hasPermission('buat_kelas'))
-            <div class="flex justify-end mb-6">
-                <a href="{{ route('kelas.create') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                    + Tambah Kelas Baru
-                </a>
-            </div>
+                <div class="flex justify-end mb-6">
+                    <a href="{{ route('kelas.create') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                        + Tambah Kelas Baru
+                    </a>
+                </div>
             @endif
 
             @if(session('success'))
@@ -39,16 +39,16 @@
 
                         {{-- Bagian Tombol Aksi (Footer Kartu) --}}
                         <div class="p-4 bg-gray-50 border-t border-gray-200 flex items-center justify-end space-x-3">
-                            <a href="{{ route('kelas.show', $kelas) }}" class="text-sm text-blue-600 hover:text-blue-900">Lihat</a>
+                            <a href="{{ route('kelas.show', $kelas->id) }}" class="text-sm text-blue-600 hover:text-blue-900">Lihat</a>
                             @if(auth()->user()->hasPermission('ubah_kelas'))
-                            <a href="{{ route('kelas.edit', $kelas) }}" class="text-sm text-indigo-600 hover:text-indigo-900">Edit</a>
+                                <a href="{{ route('kelas.edit', $kelas) }}" class="text-sm text-indigo-600 hover:text-indigo-900">Edit</a>
                             @endif
                             @if(auth()->user()->hasPermission('hapus_kelas'))
-                            <form action="{{ route('kelas.destroy', $kelas) }}" method="POST" onsubmit="return confirm('Anda yakin ingin menghapus kelas ini?');">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="text-sm text-red-600 hover:text-red-900">Hapus</button>
-                            </form>
+                                <form action="{{ route('kelas.destroy', $kelas) }}" method="POST" onsubmit="return confirm('Anda yakin ingin menghapus kelas ini?');">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="text-sm text-red-600 hover:text-red-900">Hapus</button>
+                                </form>
                             @endif
                         </div>
                     </div>

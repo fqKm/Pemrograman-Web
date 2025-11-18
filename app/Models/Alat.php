@@ -13,20 +13,10 @@ class Alat extends Model
     protected $primaryKey = 'id';
 
     protected $fillable = [
+        'id',
         'nama_alat',
-        'tipe',
-        'status',
-        'tanggal_pembelian',
-        'tanggal_perawatan_terakhir',
+        'jumlah',
+        'terpakai',
+        'tanggal_pembelian'
     ];
-
-    public function kemajuan()
-    {
-        return $this->belongsToMany(
-            Kemajuan::class,
-            'kemajuan_alat',
-            'alat_id',
-            'kemajuan_id'
-        );
-    }
 }

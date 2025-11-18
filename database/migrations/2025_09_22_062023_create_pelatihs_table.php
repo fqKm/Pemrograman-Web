@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('pelatih', function (Blueprint $table) {
             $table->id();          // PK
+            $table->foreignId('user_id')->constrained('users', 'id')->cascadeOnDelete();
             $table->string('nama_pelatih', 100);
             $table->string('spesialisasi', 100)->nullable();
             $table->date('tanggal_masuk')->nullable();     // hire_date

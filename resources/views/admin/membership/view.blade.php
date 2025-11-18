@@ -8,7 +8,7 @@
     <div class="py-12">
         <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
             <div class="flex justify-end mb-4">
-                <a href="{{ route('admin.membership.index') }}" class="text-blue-500 hover:text-blue-700">
+                <a href="{{ route('membership.index') }}" class="text-blue-500 hover:text-blue-700">
                     &larr; Kembali ke Daftar Membership
                 </a>
             </div>
@@ -36,7 +36,7 @@
                     </div>
 
                     <div class="mt-6 pt-4 border-t border-gray-200 flex justify-end">
-                        <a href="{{ route('admin.membership.edit', $membership) }}" class="bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded">
+                        <a href="{{ route('membership.edit', $membership) }}" class="bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded">
                             Edit Membership Ini Ini
                         </a>
                     </div>
@@ -52,7 +52,7 @@
                             @foreach($membership->members as $member)
                                 <li>
                                     <strong>
-                                        <a href="{{ route('admin.members.show', $member->id) }}" class="text-blue-500 hover:underline">
+                                        <a href="{{ route('members.show', $member->id) }}" class="text-blue-500 hover:underline">
                                             {{ $member->nama }}
                                         </a>
                                     </strong>

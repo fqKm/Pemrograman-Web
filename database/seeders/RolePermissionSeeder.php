@@ -47,6 +47,7 @@ class RolePermissionSeeder extends Seeder
             'lihat_alat',
             'lihat_akun_pelatih',
             'ubah_akun_pelatih',
+            'nilai_progress_member'
         ])->get();
         $pelatihRole->permissions()->attach($pelatihPermissions);
     }

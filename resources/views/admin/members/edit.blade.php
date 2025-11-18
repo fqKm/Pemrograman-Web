@@ -11,7 +11,7 @@
 
     <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
         <div class="p-6">
-            <form action="{{ route('admin.members.update', $member) }}" method="POST">
+            <form action="{{ route('members.update', $member) }}" method="POST">
                 @csrf
                 @method('PUT') <div class="mb-4">
                     <label for="nama" class="block text-sm font-medium text-gray-700">Nama Lengkap</label>
@@ -62,9 +62,9 @@
                     </select>
                     @error('status')<p class="mt-1 text-sm text-red-600">{{ $message }}</p>@enderror
                 </div>
-                
+
                 <div class="flex items-center justify-end mt-6">
-                    <a href="{{ route('admin.members.index') }}" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded mr-2">Batal</a>
+                    <a href="{{ route('members.index') }}" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded mr-2">Batal</a>
                     <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-black font-bold py-2 px-4 rounded">Update</button>
                 </div>
             </form>

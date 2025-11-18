@@ -12,14 +12,14 @@ class Pelatih extends Model
     public $incrementing = true;
     protected $keyType = 'int';
     protected $fillable = [
+        'user_id',
         'nama_pelatih',
         'spesialisasi',
         'tanggal_masuk'];
     public $timestamps = true;
-        
+
     public function kelas(): HasMany
     {
-        return $this->hasMany(Kelas::class, 'pelatih_id');
+        return $this->hasMany(Kelas::class, 'pelatih_id', 'id');
     }
-
 }

@@ -22,7 +22,7 @@ return new class extends Migration
 
             // Constraint FK
             $table->foreignId('pelatih_id')
-                ->constrained('pelatih')
+                ->constrained('users')
                   ->onUpdate('cascade')
                   ->onDelete('restrict');
         });

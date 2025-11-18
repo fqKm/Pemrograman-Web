@@ -3,8 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Kelas;
+use App\Models\Kemajuan;
+use App\Models\Member;
+use App\Models\Membership;
 use App\Models\Pelatih;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class KelasController extends Controller
 {
@@ -13,8 +17,19 @@ class KelasController extends Controller
      */
     public function index()
     {
-        $kelass = Kelas::with('pelatih')->latest()->get();
-        return view('admin.kelas.index', compact('kelass'));
+        $user = Auth::user();
+        $pelatih = Pelatih::where('user_id', $user->id)->first();
+        switch ($user->role->name) {
+            case 'member':
+                $kelass = Kelas::with('pelatih')->latest()->get();
+                return view('member.kelas.index', compact('kelass'));
+            case 'pelatih':
+                $kelass = Kelas::with('pelatih')->where('pelatih_id', $pelatih->id)->latest()->get();
+                return view('pelatih.kelas.index', compact('kelass'));
+            default:
+                $kelass = Kelas::with('pelatih')->latest()->get();
+                return view('admin.kelas.index', compact('kelass'));
+        }
     }
 
     /**
@@ -48,10 +63,19 @@ class KelasController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Kelas $kela)
+    public function show(int $kelas_id)
     {
-        $kela->load('pelatih');
-        return view('admin.kelas.view', compact('kela'));
+        $kela = Kelas::with('pelatih')->findOrFail($kelas_id);
+        $kemajuan = Kemajuan::where('kelas_id', $kela->id)->get();
+
+        switch (Auth::user()->role->name) {
+            case 'pelatih':
+                return view('pelatih.kelas.view', compact('kela', 'kemajuan'));
+            case 'admin':
+                return view('admin.kelas.view', compact('kela', 'kemajuan'));
+            default:
+                return view('admin.kelas.view', compact('kela', 'kemajuan'));
+        }
     }
 
     /**
@@ -66,7 +90,8 @@ class KelasController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Kelas $kela)
+    public
+    function update(Request $request, Kelas $kela)
     {
         $request->validate([
             'pelatih_id' => 'required|exists:pelatih,id',
@@ -77,7 +102,13 @@ class KelasController extends Controller
             'deskripsi' => 'nullable|string',
         ]);
 
-        $kela->update($request->all());
+        try {
+            $kela->update($request->all());
+            // commit
+        } catch (\Throwable $th) {
+            // rollback
+        }
+
 
         return redirect()->route('admin.kelas.index')->with('success', 'Data kelas berhasil diupdate!');
     }
@@ -85,7 +116,8 @@ class KelasController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Kelas $kela)
+    public
+    function destroy(Kelas $kela)
     {
         $kela->delete();
         return redirect()->route('admin.kelas.index')->with('success', 'Kelas berhasil dihapus!');

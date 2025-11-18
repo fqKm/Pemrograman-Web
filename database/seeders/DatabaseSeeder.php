@@ -19,7 +19,7 @@ class DatabaseSeeder extends Seeder
             RoleSeeder::class,
             PermissionSeeder::class,
             RolePermissionSeeder::class,
-            UserSeeder::class, 
+            UserSeeder::class,
             PelatihSeeder::class,
             KelasSeeder::class,
             MembershipSeeder::class,
@@ -29,6 +29,8 @@ class DatabaseSeeder extends Seeder
             PemesananSeeder::class,
             PembayaranSeeder::class,
             LanggananSeeder::class,
+            KelasMemberSeeder::class,
+            KemajuanMemberSeeder::class,
         ]);
         User::factory()->create([
             'name' => 'Test User',
