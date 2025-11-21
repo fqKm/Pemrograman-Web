@@ -45,7 +45,7 @@ class PelatihController extends Controller
 
         Pelatih::create($request->all());
 
-        return redirect()->route('admin.pelatih.index')->with('success', 'Pelatih baru berhasil ditambahkan!');
+        return redirect()->route('pelatih.index')->with('success', 'Pelatih baru berhasil ditambahkan!');
     }
 
     /**
@@ -78,7 +78,7 @@ class PelatihController extends Controller
 
         $pelatih->update($request->all());
 
-        return redirect()->route('admin.pelatih.index')->with('success', 'Data pelatih berhasil diupdate!');
+        return redirect()->route('pelatih.index')->with('success', 'Data pelatih berhasil diupdate!');
 
     }
 
@@ -88,11 +88,11 @@ class PelatihController extends Controller
     public function destroy(Pelatih $pelatih)
     {
         if ($pelatih->kelas()->exists()) {
-            return redirect()->route('admin.pelatih.index')->with('error', 'Gagal! Pelatih ini tidak bisa dihapus karena masih terdaftar di sebuah kelas.');
+            return redirect()->route('pelatih.index')->with('error', 'Gagal! Pelatih ini tidak bisa dihapus karena masih terdaftar di sebuah kelas.');
         }
 
         $pelatih->delete();
 
-        return redirect()->route('admin.pelatih.index')->with('success', 'Pelatih berhasil dihapus!');
+        return redirect()->route('pelatih.index')->with('success', 'Pelatih berhasil dihapus!');
     }
 }

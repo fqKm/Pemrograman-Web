@@ -40,7 +40,7 @@ class MembershipController extends Controller
             'harga' => 'required',
         ]);
         $membership = Membership::create($request->all());
-        return redirect()->route('admin.membership.index')
+        return redirect()->route('membership.index')
             ->with('success', 'Membership Berhasil Dibuat');
     }
 
@@ -51,7 +51,7 @@ class MembershipController extends Controller
     {
         $membership = Membership::with('members')->find($id);
         if (!$membership) {
-            return redirect()->route('admin.membership.index')
+            return redirect()->route('membership.index')
                 ->with('error', 'Membership yang Anda cari tidak ditemukan.');
         }
         return view('admin.membership.view', compact('membership'));
@@ -64,7 +64,7 @@ class MembershipController extends Controller
     {
         $membership = Membership::find($id);
         if (!$membership) {
-            return redirect()->route('admin.membership.index')
+            return redirect()->route('membership.index')
                 ->with('error', 'Membership yang Anda cari tidak ditemukan.');
         }
         return view('admin.membership.edit', compact('membership'));
@@ -82,11 +82,11 @@ class MembershipController extends Controller
         ]);
         $membership = Membership::find($id);
         if (!$membership) {
-            return redirect()->route('admin.membership.index')
+            return redirect()->route('membership.index')
                 ->with('error', 'Membership yang Anda cari tidak ditemukan.');
         }
         $membership->update($request->all());
-        return redirect()->route('admin.membership.index')
+        return redirect()->route('membership.index')
             ->with('success', 'Membership Berhasil Diupdate');
     }
 
@@ -100,11 +100,11 @@ class MembershipController extends Controller
         try {
             DB::commit();
             $membership->delete();
-            return redirect()->route('admin.membership.index')
+            return redirect()->route('membership.index')
                 ->with('success', 'Membership Berhasil Dihapus');
         } catch (Exception $exception) {
             DB::rollBack();
-            return redirect()->route('admin.membership.index')
+            return redirect()->route('membership.index')
                 ->with('error', 'gagal menghapus data'.$exception->getMessage());
         }
     }

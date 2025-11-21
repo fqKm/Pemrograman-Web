@@ -32,6 +32,10 @@
                         <x-nav-link :href="route('membership.index')" :active="request()->routeIs('membership.*')">
                             {{__('Membership')}}
                         </x-nav-link>
+
+                        <x-nav-link :href="route('alat.index')" :active="request()->routeIs('alat.*')">
+                            {{__('Alat')}}
+                        </x-nav-link>
                     @endif
 
                     @if(Auth::user()->isTrainer())

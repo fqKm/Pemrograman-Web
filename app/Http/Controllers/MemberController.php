@@ -22,7 +22,7 @@ class MemberController extends Controller
      */
     public function create()
     {
-        $memberships = Membership::all(); 
+        $memberships = Membership::all();
         return view('admin.members.create', compact('memberships'));
     }
 
@@ -43,7 +43,7 @@ class MemberController extends Controller
 
         Member::create($request->all());
 
-        return redirect()->route('admin.members.index')
+        return redirect()->route('members.index')
                          ->with('success', 'Member baru berhasil ditambahkan!');
     }
 
@@ -60,7 +60,7 @@ class MemberController extends Controller
      */
     public function edit(Member $member)
     {
-        $memberships = Membership::all(); 
+        $memberships = Membership::all();
         return view('admin.members.edit', compact('member', 'memberships'));
     }
 
@@ -81,7 +81,7 @@ class MemberController extends Controller
 
         $member->update($request->all());
 
-        return redirect()->route('admin.members.index')
+        return redirect()->route('members.index')
                          ->with('success', 'Data member berhasil diupdate!');
     }
 
@@ -93,7 +93,7 @@ class MemberController extends Controller
 
         $member->kemajuan()->delete();
         $member->delete();
-        return redirect()->route('admin.members.index')
+        return redirect()->route('members.index')
                          ->with('success', 'Member dan semua data kemajuannya berhasil dihapus!');
     }
 }

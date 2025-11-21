@@ -110,7 +110,7 @@ class KelasController extends Controller
         }
 
 
-        return redirect()->route('admin.kelas.index')->with('success', 'Data kelas berhasil diupdate!');
+        return redirect()->route('kelas.index')->with('success', 'Data kelas berhasil diupdate!');
     }
 
     /**
@@ -120,7 +120,7 @@ class KelasController extends Controller
     function destroy(Kelas $kela)
     {
         $kela->delete();
-        return redirect()->route('admin.kelas.index')->with('success', 'Kelas berhasil dihapus!');
+        return redirect()->route('kelas.index')->with('success', 'Kelas berhasil dihapus!');
     }
 
 

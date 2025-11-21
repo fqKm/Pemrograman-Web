@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AlatController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\KelasController;
@@ -21,8 +22,6 @@ Route::get('/', function () {
 Route::get('/dashboard', function () {
     $user = auth()->user();
 
-    // Cek jika rolenya adalah 'pelatih'
-    // Kita gunakan helper 'isTrainer()' dari model User.php Anda
     if ($user->isTrainer()) {
         return redirect()->route('pelatih.dashboard');
     }
@@ -34,17 +33,13 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::get('/pelatih/dashboard', [DashboardController::class, 'pelatihDashboard'])->middleware(['auth', 'permission:lihat_akun_pelatih'])
+Route::get('/pelatih/dashboard', [DashboardController::class, 'pelatihDashboard'])
+    ->middleware(['auth', 'permission:lihat_akun_pelatih'])
     ->name('pelatih.dashboard');
 
-Route::get('/members/dashboard', [MemberDashboardController::class, 'index'])
+Route::get('/members/dashboard', [DashboardController::class, 'memberDashboard'])
     ->middleware(['auth', 'permission:lihat_akun_member'])
     ->name('members.dashboard');
-
-// Route::resource('members', MemberController::class);
-// Route::resource('kelas', KelasController::class);
-// Route::resource('pelatih', PelatihController::class);
-// Route::resource('membership', MembershipController::class);
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -137,15 +132,22 @@ Route::middleware(['auth'])->group(function () {
     });
 
     Route::middleware(['auth', 'permission:lihat_alat'])->group(function () {
+        Route::get('alat', [AlatController::class, 'index'])->name('alat.index');
+        Route::get('alat/show/{id}', [AlatController::class, 'show'])->name('alat.show');
     });
 
     Route::middleware(['auth', 'permission:tambah_alat'])->group(function () {
+        Route::get('alat/create', [AlatController::class, 'create'])->name('alat.create');
+        Route::post('alat', [AlatController::class, 'store'])->name('alat.store');
     });
 
     Route::middleware(['auth', 'permission:ubah_alat'])->group(function () {
+        Route::get('alat/edit/{id}', [AlatController::class, 'edit'])->name('alat.edit');
+        Route::put('alat/edit/{id}', [AlatController::class, 'update'])->name('alat.update');
     });
 
     Route::middleware(['auth', 'permission:hapus_alat'])->group(function () {
+        Route::delete('alat/delete/{id}', [AlatController::class, 'destroy'])->name('alat.destroy');
     });
 
     Route::middleware(['auth', 'permission:lihat_akun_member'])->group(function () {

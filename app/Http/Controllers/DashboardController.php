@@ -20,4 +20,9 @@ class DashboardController extends Controller
         })->get();
         return view('pelatih.dashboard', compact('members', 'kelas', 'pelatih'));
     }
+
+    public function memberDashboard()
+    {
+        return view('members.dashboard');
+    }
 }
