@@ -27,7 +27,7 @@ Route::get('/dashboard', function () {
     }
 
     if ($user->isMember()) {
-        return redirect()->route('member.dashboard');
+        return redirect()->route('members.dashboard');
     }
 
     return view('dashboard');
