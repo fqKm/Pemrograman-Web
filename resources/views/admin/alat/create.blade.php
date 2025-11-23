@@ -25,6 +25,12 @@
                             @error('jumlah')<p class="mt-1 text-sm text-red-600">{{ $message }}</p>@enderror
                         </div>
 
+                        <div class="mb-4">
+                            <label for="tanggal_pembelian" class="block text-sm font-medium text-gray-700">Tanggal Pembelian</label>
+                            <input type="date" name="tanggal_pembelian" id="tanggal_pembelian" value="{{ old('tanggal_pembelian') }}" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">
+                            @error('tanggal_pembelian')<p class="mt-1 text-sm text-red-600">{{ $message }}</p>@enderror
+                        </div>
+
                         <div class="flex items-center justify-end mt-6">
                             <a href="{{ route('alat.index') }}" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded mr-2">Batal</a>
                             <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Simpan</button>
