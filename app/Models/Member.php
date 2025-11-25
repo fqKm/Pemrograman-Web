@@ -23,6 +23,11 @@ class Member extends Model
         'membership_id'
     ];
 
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
+
     public function membership(): BelongsTo
     {
         return $this->belongsTo(Membership::class);

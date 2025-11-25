@@ -37,7 +37,7 @@ Route::get('/pelatih/dashboard', [DashboardController::class, 'pelatihDashboard'
     ->middleware(['auth', 'permission:lihat_akun_pelatih'])
     ->name('pelatih.dashboard');
 
-Route::get('/members/dashboard', [DashboardController::class, 'memberDashboard'])
+Route::get('/members/dashboard', [MemberDashboardController::class, 'index'])
     ->middleware(['auth', 'permission:lihat_akun_member'])
     ->name('members.dashboard');
 
@@ -187,6 +187,8 @@ Route::middleware(['auth'])->group(function () {
         Route::put('progressmember/{id}', [ProgressMemberController::class, 'update'])->name('progressmember.update');
         Route::delete('progressmember/{id}', [ProgressMemberController::class, 'destroy'])->name('progressmember.destroy');
     });
+
+    Route::post('kelas/{id}/join', [MemberDashboardController::class, 'joinKelas'])->name('kelas.join');
 });
 
 
