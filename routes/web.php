@@ -10,6 +10,7 @@ use App\Http\Controllers\PelatihController;
 use App\Http\Controllers\PelatihDashboardController;
 use App\Http\Controllers\MemberDashboardController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\WebhookController;
 
 use App\Models\Membership;
 use App\Models\Kelas;
@@ -59,6 +60,8 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+Route::post('/webhook/payment', [WebhookController::class, 'handlePayment'])->name('payment.webhook');
 
 Route::middleware(['auth'])->group(function () {
     // URL: /admin/members
@@ -145,6 +148,12 @@ Route::middleware(['auth'])->group(function () {
     Route::middleware(['auth', 'permission:lihat_daftar_membership'])->group(function () {
         Route::get('membership', [MembershipController::class, 'index'])->name('membership.index');
         Route::get('membership/{id}', [MembershipController::class, 'show'])->name('membership.show');
+
+        Route::get('/orders/{membership_id}/confirm', [OrderController::class, 'confirm'])->name('orders.confirm');
+        Route::post('/orders/{membership_id}/process', [OrderController::class, 'process'])->name('orders.process');
+        Route::get('/orders/{order}/waiting', [OrderController::class, 'waiting'])->name('orders.waiting');
+        Route::get('/orders/{order}/check-status', [OrderController::class, 'checkStatus'])->name('orders.check-status');
+        Route::get('/orders/{order}/success', [OrderController::class, 'success'])->name('orders.success');
     });
 
 

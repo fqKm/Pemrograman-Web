@@ -23,7 +23,7 @@
                         <p class="text-sm text-gray-600 mb-2 font-medium">Nomor Virtual Account:</p>
                         <div class="flex items-center gap-2">
                             <input type="text" value="{{ $order->va_number }}" id="va-number" readonly
-                                class="flex-1 font-mono text-2xl font-bold text-gray-800 bg-white border-gray-300 rounded-md py-2 px-3 focus:ring-indigo-500 focus:border-indigo-500">
+                                class="flex-1 font-mono text-2xl font-bold text-gray-800 bg-white border-gray-300 rounded-md py-2 px-3">
                             <button onclick="copyVA()" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2.5 rounded-md font-medium transition">
                                 Salin
                             </button>
@@ -33,6 +33,7 @@
                     <div class="border rounded-lg p-4 mb-6">
                         <div class="flex items-center gap-4 mb-4">
                             @if ($order->product)
+                                {{-- Tampilan Jika Produk --}}
                                 @if ($order->product->photo)
                                     <img src="{{ asset('storage/' . $order->product->photo) }}" alt="{{ $order->product->name }}" class="w-16 h-16 object-cover rounded">
                                 @else
@@ -44,15 +45,17 @@
                                     <h4 class="font-semibold text-lg">{{ $order->product->name }}</h4>
                                     <p class="text-sm text-gray-600">Jumlah: {{ $order->quantity }} Item</p>
                                 </div>
+                            
                             @elseif ($order->membership)
+                                {{-- Tampilan Jika Membership --}}
                                 <div class="w-16 h-16 bg-indigo-100 rounded flex items-center justify-center text-indigo-600">
                                     <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v3a2 2 0 110 4v3a2 2 0 002 2h14a2 2 0 002-2v-3a2 2 0 110-4V7a2 2 0 00-2-2H5z"/>
                                     </svg>
                                 </div>
                                 <div>
-                                    <h4 class="font-semibold text-lg">Membership: {{ $order->membership->nama_plan }}</h4>
-                                    <p class="text-sm text-gray-600">Durasi: {{ $order->membership->formatted_duration }}</p>
+                                    <h4 class="font-semibold text-lg">{{ $order->membership->nama_plan }}</h4>
+                                    <p class="text-sm text-gray-600">Langganan Gym</p>
                                 </div>
                             @endif
                         </div>
@@ -79,21 +82,15 @@
                         </a>
                         @endif
                         
-                        {{-- Redirect tombol 'Kembali' sesuai tipe pesanan --}}
-                        <a href="{{ $order->membership_id ? route('membership.index') : route('customer.products.index') }}" 
-                           class="w-full bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold py-3 px-4 rounded-lg text-center transition border border-gray-300">
-                            Kembali ke Daftar
+                        <a href="{{ route('members.dashboard') }}" class="w-full bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold py-3 px-4 rounded-lg text-center transition border border-gray-300">
+                            Kembali ke Dashboard
                         </a>
                     </div>
 
                     <div class="text-center mt-6">
-                        <div class="inline-flex items-center gap-2 text-sm text-gray-500">
-                            <svg class="animate-spin h-4 w-4 text-gray-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                            </svg>
+                        <p class="text-sm text-gray-500 animate-pulse">
                             Halaman akan refresh otomatis jika pembayaran diterima...
-                        </div>
+                        </p>
                     </div>
                 </div>
             </div>
@@ -109,19 +106,15 @@
         }
 
         // Auto check payment status every 5 seconds
-        // Route check status ini harus dibuat umum atau spesifik membership
-        const checkUrl = '{{ $order->membership_id ? route("membership.orders.check-status", $order) : route("orders.check-status", $order) }}';
-        const successUrl = '{{ $order->membership_id ? route("membership.orders.success", $order) : route("orders.success", $order) }}';
-
         setInterval(function() {
-            fetch(checkUrl)
+            fetch('{{ route("orders.check-status", $order) }}')
                 .then(response => response.json())
                 .then(data => {
                     if (data.status === 'paid') {
-                        window.location.href = successUrl;
+                        window.location.href = '{{ route("orders.success", $order) }}';
                     }
                 })
-                .catch(err => console.error('Gagal cek status:', err));
+                .catch(err => console.error(err));
         }, 5000);
     </script>
 </x-app-layout>

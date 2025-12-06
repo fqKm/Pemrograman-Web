@@ -16,7 +16,7 @@
                             </svg>
                         </div>
                         <h3 class="text-2xl font-bold text-gray-900 mb-1">Pembayaran Berhasil!</h3>
-                        <p class="text-gray-500">Terima kasih atas pembayaran Anda.</p>
+                        <p class="text-gray-500">Terima kasih, membership Anda kini sudah aktif.</p>
                         <p class="text-sm text-gray-400 mt-1">Order #{{ $order->order_number }}</p>
                     </div>
 
@@ -25,7 +25,7 @@
 
                         <div class="flex items-center gap-4 mb-4">
                             @if ($order->product)
-                                {{-- Jika Produk --}}
+                                {{-- Produk --}}
                                 @if ($order->product->photo)
                                     <img src="{{ asset('storage/' . $order->product->photo) }}" alt="{{ $order->product->name }}" class="w-16 h-16 object-cover rounded">
                                 @else
@@ -38,7 +38,7 @@
                                     <p class="text-sm text-gray-600">Kode: {{ $order->product->code }}</p>
                                 </div>
                             @elseif ($order->membership)
-                                {{-- Jika Membership --}}
+                                {{-- Membership --}}
                                 <div class="w-16 h-16 bg-green-100 rounded flex items-center justify-center text-green-600">
                                     <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
@@ -46,7 +46,7 @@
                                 </div>
                                 <div>
                                     <h5 class="font-bold text-gray-900">{{ $order->membership->nama_plan }}</h5>
-                                    <p class="text-sm text-gray-600">Durasi: {{ $order->membership->formatted_duration }}</p>
+                                    <p class="text-sm text-gray-600">Durasi: {{ $order->membership->formatted_duration ?? $order->membership->durasi . ' Hari' }}</p>
                                 </div>
                             @endif
                         </div>
@@ -69,11 +69,11 @@
 
                     <div class="flex gap-4">
                         @if($order->membership_id)
-                            <a href="{{ route('members.dashboard') }}" class="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-4 rounded-lg text-center transition">
+                            <a href="{{ route('members.dashboard') }}" class="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-4 rounded-lg text-center transition shadow">
                                 Ke Dashboard Member
                             </a>
                         @else
-                            <a href="{{ route('customer.products.index') }}" class="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-4 rounded-lg text-center transition">
+                            <a href="{{ route('customer.products.index') }}" class="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-lg text-center transition shadow">
                                 Belanja Lagi
                             </a>
                         @endif

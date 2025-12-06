@@ -8,6 +8,7 @@ use App\Models\Order;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 
 class OrderController extends Controller
@@ -20,8 +21,8 @@ class OrderController extends Controller
 
 public function process(Membership $membership)
     {
-        $user = Auth::user();
-        $expiredHours = 24;
+        $user = auth()->user();
+        $expiredHours = (int) config('services.payment.expired_hours', 24);
 
         // Buat Order
         $order = Order::create([
@@ -47,12 +48,12 @@ public function process(Membership $membership)
                 'customer_name' => auth()->user()->name,
                 'customer_email' => auth()->user()->email,
                 'customer_phone' => auth()->user()->phone ?? '081234567890',
-                'description' => 'Tiket Kelas: ' . $kelas->nama_kelas, // Gunakan nama_kelas
+                'description' => 'Membership: ' . $membership->nama_plan, 
                 'expired_duration' => $expiredHours,
                 'callback_url' => route('orders.success', $order),
                 'metadata' => [
-                    'kelas_id' => $kelas->id,
-                    'user_id' => auth()->id(),
+                    'membership_id' => $membership->id, // Ganti kelas_id jadi membership_id
+                    'user_id' => $user->id,
                 ],
             ]);
 
@@ -67,12 +68,12 @@ public function process(Membership $membership)
                 return redirect()->route('orders.waiting', $order);
             } else {
                 $order->update(['payment_status' => 'failed']);
-                return redirect()->route('member.dashboard')
+                return redirect()->route('members.dashboard')
                     ->with('error', 'Gagal membuat pembayaran.');
             }
         } catch (\Exception $e) {
             $order->update(['payment_status' => 'failed']);
-            return redirect()->route('member.dashboard')
+            return redirect()->route('members.dashboard')
                 ->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
         }
         // Untuk simulasi redirect langsung ke waiting
@@ -90,7 +91,7 @@ public function process(Membership $membership)
         }
 
         if ($order->isExpired()) {
-            return redirect()->route('customer.products.index')
+            return redirect()->route('members.dashboard')
                 ->with('error', 'Pembayaran telah expired.');
         }
 

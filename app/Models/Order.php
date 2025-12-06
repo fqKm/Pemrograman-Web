@@ -9,6 +9,7 @@ class Order extends Model
     protected $fillable = [
         'user_id',
         'product_id',
+        'membership_id',
         'order_number',
         'quantity',
         'price',
@@ -33,10 +34,10 @@ class Order extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function product()
-    {
-        return $this->belongsTo(Product::class);
-    }
+    public function membership()
+{
+    return $this->belongsTo(Membership::class);
+}
 
     public function isPending()
     {

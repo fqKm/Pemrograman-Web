@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Member;
 use App\Models\Kelas;
 use App\Models\Alat;   
+use App\Models\KemajuanMember;
+use App\Models\Membership;
 
 class MemberDashboardController extends Controller
 {
@@ -16,7 +18,6 @@ class MemberDashboardController extends Controller
         $user = Auth::user();
 
         // 2. Cari data Member berdasarkan user_id
-        // Kita gunakan 'with' untuk mengambil data membership sekaligus agar efisien (Eager Loading)
         $member = Member::where('user_id', $user->id)
                         ->with(['membership', 'kelas.pelatih']) 
                         ->first();
@@ -25,6 +26,8 @@ class MemberDashboardController extends Controller
         if (!$member) {
             return redirect()->route('dashboard')->with('error', 'Data member tidak ditemukan.');
         }
+
+        $membershipsPlans = Membership::all();
 
         $availableClasses = Kelas::whereDoesntHave('member', function($query) use ($member) {
                                 $query->where('members.id', $member->id);
@@ -37,6 +40,16 @@ class MemberDashboardController extends Controller
                             
         $availableTools = Alat::limit(8)->get();    // Contoh ambil 4 alat
 
+        $progressHistory = KemajuanMember::where('member_id', $member->id)
+                        ->with('kemajuan')
+                        ->orderBy('created_at', 'desc')
+                        ->limit(5)
+                        ->get();
+
+        $workoutsThisMonth = KemajuanMember::where('member_id', $member->id)
+                        ->whereMonth('created_at', now()->month)
+                        ->count();
+
         // 3. Kirim data ke view
         return view('members.dashboard', [
             'user' => $user,
@@ -44,6 +57,9 @@ class MemberDashboardController extends Controller
             'membership' => $member->membership, // Data paket membership
             'availableClasses' => $availableClasses,
             'availableTools' => $availableTools,
+            'progressHistory' => $progressHistory,
+            'workoutsThisMonth' => $workoutsThisMonth,
+            'membershipsPlans' => $membershipsPlans,
             // Anda bisa menambahkan data lain seperti sisa hari, dll di sini
         ]);
     }
@@ -79,4 +95,16 @@ class MemberDashboardController extends Controller
 
     return back()->with('success', 'Berhasil bergabung ke kelas ' . $kelas->nama_kelas);
     }
+
+    public function leaveKelas($id)
+{
+    $user = Auth::user();
+    $member = Member::where('user_id', $user->id)->first();
+    $kelas = Kelas::findOrFail($id);
+
+    // Detach member dari kelas
+    $kelas->member()->detach($member->id);
+
+    return back()->with('success', 'Anda berhasil membatalkan kelas ' . $kelas->nama_kelas);
+}
 }

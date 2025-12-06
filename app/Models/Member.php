@@ -14,6 +14,7 @@ class Member extends Model
     public $timestamps = true;
     public $incrementing = true;
     protected $fillable = [
+        'user_id',
         'nama',
         'nomor_hp',
         'email',

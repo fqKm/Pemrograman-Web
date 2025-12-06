@@ -24,6 +24,14 @@
         </div>
 
         <div>
+            <x-input-label for="phone" :value="__('Phone Number')" class="text-gray-700 font-medium" />
+            <x-text-input id="phone" class="block mt-1 w-full rounded-lg border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 shadow-sm transition duration-150 ease-in-out" 
+                type="text" name="phone" :value="old('phone')" required autocomplete="tel" 
+                placeholder="081234567890" />
+            <x-input-error :messages="$errors->get('phone')" class="mt-2" />
+        </div>
+
+        <div>
             <x-input-label for="password" :value="__('Password')" class="text-gray-700 font-medium" />
             <x-text-input id="password" class="block mt-1 w-full rounded-lg border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 shadow-sm transition duration-150 ease-in-out"
                 type="password" name="password" required autocomplete="new-password" 
