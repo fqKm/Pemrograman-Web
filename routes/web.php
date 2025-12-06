@@ -9,6 +9,11 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PelatihController;
 use App\Http\Controllers\PelatihDashboardController;
 use App\Http\Controllers\MemberDashboardController;
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\WebhookController;
+
+use App\Models\Membership;
+use App\Models\Kelas;
 
 use App\Http\Controllers\ProgressController;
 use App\Http\Controllers\ProgressMemberController;
@@ -16,7 +21,16 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
 Route::get('/', function () {
-    return view('welcome');
+    if (Auth::check()) {
+        $user = Auth::user();
+        if ($user->isTrainer()) return redirect()->route('pelatih.dashboard');
+        if ($user->isMember()) return redirect()->route('members.dashboard');
+        return redirect()->route('dashboard');
+}
+    $memberships = Membership::all();
+    $featuredClasses = Kelas::with('pelatih')->limit(3)->get(); // Contoh ambil 3 kelas
+
+    return view('welcome', compact('memberships', 'featuredClasses'));
 });
 
 Route::get('/dashboard', function () {
@@ -47,6 +61,8 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+Route::post('/webhook/payment', [WebhookController::class, 'handlePayment'])->name('payment.webhook');
+
 Route::middleware(['auth'])->group(function () {
     // URL: /admin/members
     // Nama Route: admin.members.index
@@ -63,6 +79,27 @@ Route::middleware(['auth'])->group(function () {
     // URL: /admin/membership
     // Nama Route: admin.membership.index
     Route::resource('membership', MembershipController::class);
+
+    // --- ALUR 1: PEMBAYARAN MEMBERSHIP ---
+    // Halaman pilih membership (biasanya di landing page atau menu khusus)
+    // Route::get('/membership', [MembershipController::class, 'index'])->name('membership.index');
+
+    // Konfirmasi Beli
+    Route::get('/membership/{membership}/buy', [OrderController::class, 'confirm'])->name('membership.buy');
+    
+    // Proses Beli
+    Route::post('/membership/{membership}/process', [OrderController::class, 'process'])->name('membership.process');
+    
+    // Halaman Menunggu & Sukses
+    Route::get('/orders/{order}', [OrderController::class, 'waiting'])->name('orders.waiting');
+    Route::get('/orders/{order}/success', [OrderController::class, 'success'])->name('orders.success');
+
+    // --- ALUR 2: BOOKING KELAS (Gratis, Syarat Member Aktif) ---
+    // Dashboard Member (Lihat Kelas)
+    Route::get('/dashboard/member', [MemberDashboardController::class, 'index'])->name('member.dashboard');
+    
+    // Action Join Kelas
+    Route::post('/kelas/{id}/join', [MemberDashboardController::class, 'joinKelas'])->name('kelas.join');
 
     Route::middleware(['auth', 'permission:request_kelas'])->group(function () {
         Route::get('kelas/request', [KelasController::class, 'requestKelas'])->name('kelas.request');
@@ -111,6 +148,12 @@ Route::middleware(['auth'])->group(function () {
     Route::middleware(['auth', 'permission:lihat_daftar_membership'])->group(function () {
         Route::get('membership', [MembershipController::class, 'index'])->name('membership.index');
         Route::get('membership/{id}', [MembershipController::class, 'show'])->name('membership.show');
+
+        Route::get('/orders/{membership_id}/confirm', [OrderController::class, 'confirm'])->name('orders.confirm');
+        Route::post('/orders/{membership_id}/process', [OrderController::class, 'process'])->name('orders.process');
+        Route::get('/orders/{order}/waiting', [OrderController::class, 'waiting'])->name('orders.waiting');
+        Route::get('/orders/{order}/check-status', [OrderController::class, 'checkStatus'])->name('orders.check-status');
+        Route::get('/orders/{order}/success', [OrderController::class, 'success'])->name('orders.success');
     });
 
 
