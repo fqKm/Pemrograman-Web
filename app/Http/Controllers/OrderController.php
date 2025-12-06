@@ -12,38 +12,31 @@ use Illuminate\Support\Str;
 
 class OrderController extends Controller
 {
-    public function confirm(Kelas $product)
-    {
-        if ($product->stock <= 0) {
-            return redirect()->route('customer.products.index')
-                ->with('error', 'Produk tidak tersedia.');
-        }
 
-        return view('orders.confirm', compact('product'));
+    public function confirm(Membership $membership)
+    {
+        return view('orders.confirm', compact('membership'));
     }
 
-    public function process(Kelas $product)
+public function process(Membership $membership)
     {
-        if ($product->stock <= 0) {
-            return redirect()->route('customer.products.index')
-                ->with('error', 'Produk tidak tersedia.');
-        }
+        $user = Auth::user();
+        $expiredHours = 24;
 
-        $expiredHours = (int) config('services.payment.expired_hours', 24);
-
-        // Create order
+        // Buat Order
         $order = Order::create([
-            'user_id' => auth()->id(),
-            'product_id' => $product->id,
-            'order_number' => 'ORD-' . strtoupper(Str::random(10)),
+            'user_id' => $user->id,
+            'membership_id' => $membership->id, // Pastikan kolom ini ada di tabel orders
+            'order_number' => 'MEM-' . strtoupper(Str::random(10)),
             'quantity' => 1,
-            'price' => $product->price,
-            'total_amount' => $product->price,
+            'price' => $membership->harga,
+            'total_amount' => $membership->harga,
             'payment_status' => 'pending',
             'expired_at' => now()->addHours($expiredHours),
         ]);
 
-        // Create Virtual Account via Payment Gateway API
+        // Integrasi Payment Gateway (Contoh Logika)
+        // ... (Logika request HTTP ke Payment Gateway sama seperti sebelumnya) ...
         try {
             $response = Http::withHeaders([
                 'X-API-Key' => config('services.payment.api_key'),
@@ -54,11 +47,11 @@ class OrderController extends Controller
                 'customer_name' => auth()->user()->name,
                 'customer_email' => auth()->user()->email,
                 'customer_phone' => auth()->user()->phone ?? '081234567890',
-                'description' => 'Pembayaran ' . $product->name,
+                'description' => 'Tiket Kelas: ' . $kelas->nama_kelas, // Gunakan nama_kelas
                 'expired_duration' => $expiredHours,
                 'callback_url' => route('orders.success', $order),
                 'metadata' => [
-                    'product_id' => $product->id,
+                    'kelas_id' => $kelas->id,
                     'user_id' => auth()->id(),
                 ],
             ]);
@@ -74,14 +67,16 @@ class OrderController extends Controller
                 return redirect()->route('orders.waiting', $order);
             } else {
                 $order->update(['payment_status' => 'failed']);
-                return redirect()->route('customer.products.index')
-                    ->with('error', 'Gagal membuat pembayaran. Silakan coba lagi.');
+                return redirect()->route('member.dashboard')
+                    ->with('error', 'Gagal membuat pembayaran.');
             }
         } catch (\Exception $e) {
             $order->update(['payment_status' => 'failed']);
-            return redirect()->route('customer.products.index')
+            return redirect()->route('member.dashboard')
                 ->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
         }
+        // Untuk simulasi redirect langsung ke waiting
+        return redirect()->route('orders.waiting', $order);
     }
 
     public function waiting(Order $order)

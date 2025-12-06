@@ -55,6 +55,15 @@ class MemberDashboardController extends Controller
         $member = Member::where('user_id', $user->id)->first();
         $kelas = Kelas::findOrFail($id);
 
+    if (!$member) {
+        return redirect()->back()->with('error', 'Anda belum terdaftar sebagai member.');
+    }
+
+    if ($member->status !== 'aktif') {
+        return redirect()->route('membership.index') // Arahkan untuk beli membership
+            ->with('error', 'Membership Anda tidak aktif. Silakan berlangganan untuk booking kelas.');
+    }
+
     // Cek kapasitas
     if ($kelas->member()->count() >= $kelas->kapasitas_maksimum) {
         return back()->with('error', 'Kelas sudah penuh!');
