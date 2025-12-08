@@ -16,11 +16,13 @@ class PelatihController extends Controller
     {
         $user = Auth::user();
         $pelatihs = Pelatih::latest()->paginate(10);
-        return match ($user->role) {
-            'admin' => view('admin.pelatih.index', compact('pelatihs')),
-            'pelatih' => view('pelatih.pelatih.index', compact('pelatihs')),
-            'member' => view('member.pelatih.index', compact('pelatihs')),
-            default => view('pelatih.index', compact('pelatihs')),
+        return match ($user->role->name) {
+            'admin'   => view('admin.pelatih.index', compact('pelatihs')),
+            // Pastikan nama view ini sesuai dengan file yang ada di folder resources/views
+            'pelatih' => view('pelatih.index', compact('pelatihs')), 
+            'member'  => view('member.pelatih.index', compact('pelatihs')),
+            // Selalu sediakan default untuk menghindari error jika role tidak dikenali
+            default   => view('member.pelatih.index', compact('pelatihs')),
         };
     }
 
@@ -45,7 +47,7 @@ class PelatihController extends Controller
 
         Pelatih::create($request->all());
 
-        return redirect()->route('pelatih.index')->with('success', 'Pelatih baru berhasil ditambahkan!');
+        return redirect()->route('admin.pelatih.index')->with('success', 'Pelatih baru berhasil ditambahkan!');
     }
 
     /**
@@ -78,7 +80,7 @@ class PelatihController extends Controller
 
         $pelatih->update($request->all());
 
-        return redirect()->route('pelatih.index')->with('success', 'Data pelatih berhasil diupdate!');
+        return redirect()->route('admin.pelatih.index')->with('success', 'Data pelatih berhasil diupdate!');
 
     }
 
@@ -88,11 +90,11 @@ class PelatihController extends Controller
     public function destroy(Pelatih $pelatih)
     {
         if ($pelatih->kelas()->exists()) {
-            return redirect()->route('pelatih.index')->with('error', 'Gagal! Pelatih ini tidak bisa dihapus karena masih terdaftar di sebuah kelas.');
+            return redirect()->route('admin.pelatih.index')->with('error', 'Gagal! Pelatih ini tidak bisa dihapus karena masih terdaftar di sebuah kelas.');
         }
 
         $pelatih->delete();
 
-        return redirect()->route('pelatih.index')->with('success', 'Pelatih berhasil dihapus!');
+        return redirect()->route('admin.pelatih.index')->with('success', 'Pelatih berhasil dihapus!');
     }
 }
