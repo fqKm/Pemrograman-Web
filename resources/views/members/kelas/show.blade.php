@@ -110,7 +110,7 @@
                                 </p>
                             @endif
 
-                            @if(!$item->is_done)
+                            @if($item->is_done)
                                 <p class="text-lg font-large text-green-900">
                                     Progress Telah Dilakukan Pada : {{$item->completed_at}}
                                 </p>
