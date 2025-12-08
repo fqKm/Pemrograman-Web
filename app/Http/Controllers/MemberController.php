@@ -43,7 +43,7 @@ class MemberController extends Controller
 
         Member::create($request->all());
 
-        return redirect()->route('members.index')
+        return redirect()->route('admin.members.index')
                          ->with('success', 'Member baru berhasil ditambahkan!');
     }
 
@@ -81,7 +81,7 @@ class MemberController extends Controller
 
         $member->update($request->all());
 
-        return redirect()->route('members.index')
+        return redirect()->route('admin.members.index')
                          ->with('success', 'Data member berhasil diupdate!');
     }
 
@@ -93,7 +93,7 @@ class MemberController extends Controller
 
         $member->kemajuan()->delete();
         $member->delete();
-        return redirect()->route('members.index')
+        return redirect()->route('admin.members.index')
                          ->with('success', 'Member dan semua data kemajuannya berhasil dihapus!');
     }
 }
