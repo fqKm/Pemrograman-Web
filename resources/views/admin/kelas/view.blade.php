@@ -25,6 +25,23 @@
                             <p class="font-medium text-gray-800">{{ $kela->pelatih->nama_pelatih ?? 'N/A' }}</p>
                         </div>
                         <div>
+                            <span class="text-sm text-gray-500">Hari : </span>
+                            <p class="font-medium text-gray-800">
+                                <?php
+                                echo match ($kela->hari) {
+                                        1 => "Senin",
+                                        2 => "Selasa",
+                                        3 => "Rabu",
+                                        4 => "Kamis",
+                                        5 => "Jumat",
+                                        6 => "Sabtu",
+                                        7 => "Minggu",
+                                        default => "Hari tidak valid",
+                                    };
+                                ?>
+                            </p>
+                        </div>
+                        <div>
                             <span class="text-sm text-gray-500">Waktu</span>
                             <p class="font-medium text-gray-800">{{ \Carbon\Carbon::parse($kela->waktu_mulai)->format('H:i') }} - {{ \Carbon\Carbon::parse($kela->waktu_selesai)->format('H:i') }}</p>
                         </div>

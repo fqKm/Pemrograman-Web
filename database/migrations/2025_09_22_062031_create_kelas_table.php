@@ -14,6 +14,7 @@ return new class extends Migration
             Schema::create('kelas', function (Blueprint $table) {
             $table->id();
             $table->string('nama_kelas', 100);
+            $table->integer('hari')->nullable();
             $table->time('waktu_mulai')->nullable();
             $table->time('waktu_selesai')->nullable();
             $table->unsignedInteger('kapasitas_maksimum')->default(0);

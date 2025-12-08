@@ -22,6 +22,19 @@
 
                         {{-- Dropdown Pelatih --}}
                         <div class="mb-4">
+                            <label for="hari" class="block text-sm font-medium text-gray-700">Pilih Hari</label>
+                            <select name="hari" id="hari" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm" required>
+                                <option value="1" {{ old('hari', $kela->hari) == 1 ? 'selected' : '' }}>Senin</option>
+                                <option value="2" {{ old('hari', $kela->hari) == 2 ? 'selected' : '' }}>Selasa</option>
+                                <option value="3" {{ old('hari', $kela->hari) == 3 ? 'selected' : '' }}>Rabu</option>
+                                <option value="4" {{ old('hari', $kela->hari) == 4 ? 'selected' : '' }}>Kamis</option>
+                                <option value="5" {{ old('hari', $kela->hari) == 5 ? 'selected' : '' }}>Jumat</option>
+                                <option value="6" {{ old('hari', $kela->hari) == 6 ? 'selected' : '' }}>Sabtu</option>
+                                <option value="7" {{ old('hari', $kela->hari) == 7 ? 'selected' : '' }}>Minggu</option>
+                            </select>
+                            @error('hari')<p class="mt-1 text-sm text-red-600">{{ $message }}</p>@enderror
+                        </div>
+                        <div class="mb-4">
                             <label for="pelatih_id" class="block text-sm font-medium text-gray-700">Pilih Pelatih</label>
                             <select name="pelatih_id" id="pelatih_id" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm" required>
                                 @foreach ($pelatihs as $pelatih)

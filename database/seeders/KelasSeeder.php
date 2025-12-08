@@ -17,6 +17,7 @@ class KelasSeeder extends Seeder
         Kelas::create([
             'pelatih_id' => 1,
             'nama_kelas' => 'Strength Basics',
+            'hari' => 1,
             'waktu_mulai' => '07:00:00',
             'waktu_selesai' => '08:00:00',
             'kapasitas_maksimum' => 20,
@@ -26,6 +27,7 @@ class KelasSeeder extends Seeder
         Kelas::create([
             'pelatih_id' => 1,
             'nama_kelas' => 'Yoga Flow',
+            'hari' => 2,
             'waktu_mulai' => '09:00:00',
             'waktu_selesai' => '10:00:00',
             'kapasitas_maksimum' => 15,
@@ -35,6 +37,7 @@ class KelasSeeder extends Seeder
         Kelas::create([
             'pelatih_id' => 1,
             'nama_kelas' => 'HIIT Express',
+            'hari' => 3,
             'waktu_mulai' => '17:30:00',
             'waktu_selesai' => '18:15:00',
             'kapasitas_maksimum' => 25,
