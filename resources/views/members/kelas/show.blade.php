@@ -8,7 +8,7 @@
     <div class="py-12">
         <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                
+
                 {{-- Banner / Header --}}
                 <div class="bg-indigo-600 p-6 text-white">
                     <div class="flex justify-between items-center">
@@ -76,4 +76,57 @@
             </div>
         </div>
     </div>
+    <div class="py-6">
+        <div class="max-w-2xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="p-6">
+
+                    <h2 class="text-xl font-semibold mb-4 text-gray-800">
+                        Progress Latihan Kamu
+                    </h2>
+
+                    @forelse ($progress as $item)
+                        <div class="border rounded-lg p-4 mb-4 shadow-sm bg-gray-50">
+                            <h3 class="text-lg font-medium text-gray-900">
+                                {{ $item->kemajuan->nama_latihan }}
+                            </h3>
+
+                            <p class="text-sm text-gray-600 mt-1">
+                                <strong>Alat:</strong>
+                                {{ $item->kemajuan->alat ? $item->kemajuan->alat->nama_alat : '-' }}
+                            </p>
+
+                            <p class="text-sm text-gray-600">
+                                <strong>Set:</strong> {{ $item->kemajuan->jumlah_set }}
+                            </p>
+
+                            <p class="text-sm text-gray-600">
+                                <strong>Repetisi:</strong> {{ $item->kemajuan->jumlah_repetisi }}
+                            </p>
+
+                            @if ($item->kemajuan->deskripsi)
+                                <p class="text-sm text-gray-700 mt-2">
+                                    {{ $item->kemajuan->deskripsi }}
+                                </p>
+                            @endif
+
+                            @if($item->is_done)
+                                <p class="text-lg font-large text-green-900">
+                                    Progress Telah Dilakukan Pada : {{$item->completed_at}}
+                                </p>
+
+                                <p class="text-sm text-gray-700 mt-2">
+                                    {{ $item->deskripsi }}
+                                </p>
+                            @endif
+                        </div>
+                    @empty
+                        <p class="text-gray-600">Belum ada progress untuk kelas ini.</p>
+                    @endforelse
+
+                </div>
+            </div>
+        </div>
+    </div>
+
 </x-app-layout>
