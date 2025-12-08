@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Kemajuan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Member;
 use App\Models\Kelas;
-use App\Models\Alat;   
+use App\Models\Alat;
 use App\Models\KemajuanMember;
 use App\Models\Membership;
 
@@ -19,7 +20,7 @@ class MemberDashboardController extends Controller
 
         // 2. Cari data Member berdasarkan user_id
         $member = Member::where('user_id', $user->id)
-                        ->with(['membership', 'kelas.pelatih']) 
+                        ->with(['membership', 'kelas.pelatih'])
                         ->first();
 
         // Cek apakah data member ada (untuk berjaga-jaga jika login sebagai admin tapi buka halaman member)
@@ -79,14 +80,20 @@ class MemberDashboardController extends Controller
     {
         $user = Auth::user();
         $member = Member::where('user_id', $user->id)->first();
-        
+
         // Ambil detail kelas beserta pelatih dan hitung member
         $kelas = Kelas::with(['pelatih', 'member'])->withCount('member')->findOrFail($id);
+        $progress = KemajuanMember::with('kemajuan')
+            ->where('member_id', $member->id)
+            ->whereHas('kemajuan', function ($q) use ($kelas) {
+                $q->where('kelas_id', $kelas->id);
+            })
+            ->get();
 
         // Cek status apakah member sudah join kelas ini
         $isJoined = $kelas->member->contains($member->id);
 
-        return view('members.kelas.show', compact('kelas', 'isJoined'));
+        return view('members.kelas.show', compact('kelas', 'isJoined', 'progress'));
     }
 
 
