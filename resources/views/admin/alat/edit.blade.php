@@ -27,7 +27,7 @@
                         </div>
 
                         <div class="mb-4">
-                            <label for="tanggal_pembelian" class="block text-sm font-medium text-gray-700">Jumlah Alat</label>
+                            <label for="tanggal_pembelian" class="block text-sm font-medium text-gray-700">Tanggal Pembelian</label>
                             <input type="date" name="tanggal_pembelian" id="tanggal_pembelian" value="{{ old('jumlah', $alat->tanggal_pembelian) }}" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">
                             @error('tanggal_pembelian')<p class="mt-1 text-sm text-red-600">{{ $message }}</p>@enderror
                         </div>

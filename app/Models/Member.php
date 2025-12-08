@@ -14,6 +14,7 @@ class Member extends Model
     public $timestamps = true;
     public $incrementing = true;
     protected $fillable = [
+        'user_id',
         'nama',
         'nomor_hp',
         'email',
@@ -22,6 +23,11 @@ class Member extends Model
         'status',
         'membership_id'
     ];
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
 
     public function membership(): BelongsTo
     {
