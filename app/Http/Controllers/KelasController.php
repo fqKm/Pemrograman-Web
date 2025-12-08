@@ -22,7 +22,7 @@ class KelasController extends Controller
         switch ($user->role->name) {
             case 'member':
                 $kelass = Kelas::with('pelatih')->latest()->get();
-                return view('member.kelas.index', compact('kelass'));
+                return view('members.kelas.index', compact('kelass'));
             case 'pelatih':
                 $kelass = Kelas::with('pelatih')->where('pelatih_id', $pelatih->id)->latest()->get();
                 return view('pelatih.kelas.index', compact('kelass'));

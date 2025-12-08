@@ -25,4 +25,10 @@ class DashboardController extends Controller
     {
         return view('members.dashboard');
     }
+
+    public function adminDashboard() 
+    {
+        return view('admin.dashboard'); // pastiin lo punya view ini
+    }
+
 }

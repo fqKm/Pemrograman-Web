@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\AlatController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\MemberController;
@@ -36,6 +37,10 @@ Route::get('/', function () {
 Route::get('/dashboard', function () {
     $user = auth()->user();
 
+    if ($user->isAdmin()) {
+        return redirect()->route('admin.dashboard');
+    }
+
     if ($user->isTrainer()) {
         return redirect()->route('pelatih.dashboard');
     }
@@ -46,6 +51,10 @@ Route::get('/dashboard', function () {
 
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::get('/admin/dashboard', [AdminDashboardController::class, 'index'])
+    ->middleware('auth') // skip permission biar admin bisa masuk
+    ->name('admin.dashboard');
 
 Route::get('/pelatih/dashboard', [DashboardController::class, 'pelatihDashboard'])
     ->middleware(['auth', 'permission:lihat_akun_pelatih'])
@@ -59,6 +68,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    Route::get('/member/settings', function () {
+        $user = auth()->user();
+        return view('members.settings', compact('user'));
+    })->name('members.settings')->middleware('auth');
+
 });
 
 Route::post('/webhook/payment', [WebhookController::class, 'handlePayment'])->name('payment.webhook');
@@ -232,6 +247,12 @@ Route::middleware(['auth'])->group(function () {
     });
 
     Route::post('kelas/{id}/join', [MemberDashboardController::class, 'joinKelas'])->name('kelas.join');
+
+    // Route membership untuk member
+    Route::prefix('member')->middleware(['auth', 'role:member'])->group(function () {
+        Route::get('membership', [MembershipController::class, 'memberIndex'])->name('members.membership.index');
+        Route::get('membership/{id}', [MembershipController::class, 'memberShow'])->name('members.membership.show');
+    });
 });
 
 

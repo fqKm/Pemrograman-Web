@@ -108,4 +108,17 @@ class MembershipController extends Controller
                 ->with('error', 'gagal menghapus data'.$exception->getMessage());
         }
     }
+
+    // buat member
+    public function memberIndex()
+    {
+        $membership = Membership::all(); // member ga perlu pagination admin-style
+        return view('members.membership.index', compact('membership'));
+    }
+
+    public function memberShow($id)
+    {
+        $membership = Membership::findOrFail($id);
+        return view('members.membership.show', compact('membership'));
+    }
 }
