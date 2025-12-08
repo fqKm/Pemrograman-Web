@@ -82,11 +82,11 @@ class MembershipController extends Controller
         ]);
         $membership = Membership::find($id);
         if (!$membership) {
-            return redirect()->route('membership.index')
+            return redirect()->route('admin.membership.index')
                 ->with('error', 'Membership yang Anda cari tidak ditemukan.');
         }
         $membership->update($request->all());
-        return redirect()->route('membership.index')
+        return redirect()->route('admin.membership.index')
             ->with('success', 'Membership Berhasil Diupdate');
     }
 
@@ -100,11 +100,11 @@ class MembershipController extends Controller
         try {
             DB::commit();
             $membership->delete();
-            return redirect()->route('membership.index')
+            return redirect()->route('admin.membership.index')
                 ->with('success', 'Membership Berhasil Dihapus');
         } catch (Exception $exception) {
             DB::rollBack();
-            return redirect()->route('membership.index')
+            return redirect()->route('admin.membership.index')
                 ->with('error', 'gagal menghapus data'.$exception->getMessage());
         }
     }

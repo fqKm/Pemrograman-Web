@@ -48,7 +48,6 @@ class KelasController extends Controller
     {
         $request->validate([
             'pelatih_id' => 'required|exists:pelatih,id',
-            'hari' => 'required|integer',
             'nama_kelas' => 'required|string|max:255',
             'waktu_mulai' => 'required|date_format:H:i',
             'waktu_selesai' => 'required|date_format:H:i|after:waktu_mulai',
@@ -96,7 +95,6 @@ class KelasController extends Controller
     {
         $request->validate([
             'pelatih_id' => 'required|exists:pelatih,id',
-            'hari' => 'required|integer',
             'nama_kelas' => 'required|string|max:255',
             'waktu_mulai' => 'required|date_format:H:i',
             'waktu_selesai' => 'required|date_format:H:i|after:waktu_mulai',
