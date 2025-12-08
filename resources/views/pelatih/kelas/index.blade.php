@@ -29,10 +29,9 @@
                         {{-- Bagian Konten Kartu --}}
                         <div class="p-6">
                             <h3 class="font-semibold text-lg text-gray-900">{{ $kelas->nama_kelas }}</h3>
-                            <p class="text-sm text-gray-600 mt-1">Oleh: {{ $kelas->pelatih->nama_pelatih ?? 'N/A' }}</p>
-                            <div>
-                                <span class="text-sm text-gray-500">Hari : </span>
-                                <p class="font-medium text-gray-800">
+                            <p class="text-sm text-gray-600 mt-1">Oleh : <strong>{{ $kelas->pelatih->nama_pelatih ?? 'N/A' }}</strong></p>
+                            <div class="mt-1 text-sm text-gray-800 space-y-2">
+                                <p class=>Hari : <strong>
                                         <?php
                                         echo match ($kelas->hari) {
                                             1 => "Senin",
@@ -45,12 +44,10 @@
                                             default => "Hari tidak valid",
                                         };
                                         ?>
-                                </p>
-                            </div>
-
-                            <div class="mt-4 text-sm text-gray-800 space-y-2">
-                                <p><strong>Waktu:</strong> {{ \Carbon\Carbon::parse($kelas->waktu_mulai)->format('H:i') }} - {{ \Carbon\Carbon::parse($kelas->waktu_selesai)->format('H:i') }}</p>
-                                <p><strong>Kapasitas:</strong> {{ $kelas->kapasitas_maksimum }} orang</p>
+                                    </strong>
+                                </p>                                        
+                                <p>Waktu:<strong> {{ \Carbon\Carbon::parse($kelas->waktu_mulai)->format('H:i') }} - {{ \Carbon\Carbon::parse($kelas->waktu_selesai)->format('H:i') }}</strong></p>
+                                <p>Kapasitas:<strong> {{ $kelas->kapasitas_maksimum }} orang</strong></p>
                                 <p class="text-gray-500 mt-2">{{ $kelas->deskripsi }}</p>
                             </div>
                         </div>

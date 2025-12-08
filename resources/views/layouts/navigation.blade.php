@@ -28,7 +28,7 @@
 
                     {{-- TAUTAN DASHBOARD BERDASARKAN PERAN (sesuai kode asli Anda) --}}
                     @if(Auth::user()->isAdmin())
-                        <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+                        <x-nav-link :href="route('dashboard')" :active="request()->routeIs('*.dashboard')">
                             {{ __('Dashboard') }}
                         </x-nav-link>
                         {{-- ... (lanjutkan tautan Admin lainnya) ... --}}

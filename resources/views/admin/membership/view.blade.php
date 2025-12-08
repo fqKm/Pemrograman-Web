@@ -6,9 +6,10 @@
     </x-slot>
 
     <div class="py-12">
-        <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
-            <div class="flex justify-end mb-4">
-                <a href="{{ route('membership.index') }}" class="text-blue-500 hover:text-blue-700">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="flex justify-between mb-4">
+                <h1 class="text-2xl font-semibold text-gray-800 dark:text-white ">Detail Membership</h1>
+                <a href="{{ route('membership.index') }}" class="text-indigo-500 hover:text-indigo-700">
                     &larr; Kembali ke Daftar Membership
                 </a>
             </div>
@@ -16,22 +17,22 @@
             {{-- Kartu Detail Pelatih --}}
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg mb-6">
                 <div class="p-6">
-                    <div class="space-y-4">
+                    <div class="space-y-3">
                         <div>
                             <span class="text-sm text-gray-500">Nama Plan</span>
-                            <p class="font-semibold text-lg text-gray-900">{{ $membership->nama_pelatih }}</p>
+                            <p class="font-medium text-lg">{{ $membership->nama_plan }}</p>
                         </div>
                         <div>
                             <span class="text-sm text-gray-500">Durasi</span>
-                            <p class="font-medium text-gray-800">{{ $membership->formatted_duration ?? '-' }}</p>
+                            <p class="font-medium text-lg">{{ $membership->formatted_duration ?? '-' }}</p>
                         </div>
                         <div>
                             <span class="text-sm text-gray-500">Harga</span>
-                            <p class="font-medium text-gray-800">Rp.{{ $membership->harga ?? '-' }}</p>
+                            <p class="font-medium text-lg">Rp.{{ $membership->harga ?? '-' }}</p>
                         </div>
                         <div>
                             <span class="text-sm text-gray-500">Deskripsi</span>
-                            <p class="font-medium text-gray-800">{{ $membership->deskripsi }}</p>
+                            <p class="font-medium text-lg">{{ $membership->deskripsi }}</p>
                         </div>
                     </div>
 
@@ -52,7 +53,7 @@
                             @foreach($membership->members as $member)
                                 <li>
                                     <strong>
-                                        <a href="{{ route('members.show', $member->id) }}" class="text-blue-500 hover:underline">
+                                        <a href="{{ route('members.show', $member->id) }}" class="text-indigo-500 hover:underline">
                                             {{ $member->nama }}
                                         </a>
                                     </strong>

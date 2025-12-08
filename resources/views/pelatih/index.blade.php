@@ -7,12 +7,16 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="flex justify-end mb-4">
-                <a href="{{ route('pelatih.create') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                    + Tambah Pelatih Baru
-                </a>
+            <div class="flex items-center justify-end mb-4">
+                <div class="w-1/2  p-4">
+                    <h2 class="text-2xl font-semibold dark:text-white text-gray-900 ">Daftar Pelatih</h2>
+                </div>
+                <div class="w-1/2 items-center p-4 text-right">
+                    <a href="{{ route('pelatih.create') }}" class="bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded">
+                        + Tambah Pelatih Baru
+                    </a>
+                </div>
             </div>
-
             @if(session('success'))
                 <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4" role="alert">
                     {{ session('success') }}
@@ -42,7 +46,7 @@
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $pelatih->spesialisasi ?? '-' }}</td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ \Carbon\Carbon::parse($pelatih->tanggal_masuk)->format('d M Y') }}</td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                        <a href="{{ route('pelatih.show', $pelatih) }}" class="text-blue-600 hover:text-blue-900 mr-3">Show</a>
+                                        <a href="{{ route('pelatih.show', $pelatih) }}" class="text-indigo-600 hover:text-indigo-900 mr-3">Show</a>
                                         <a href="{{ route('pelatih.edit', $pelatih) }}" class="text-indigo-600 hover:text-indigo-900 mr-3">Edit</a>
                                         <form action="{{ route('pelatih.destroy', $pelatih) }}" method="POST" class="inline" onsubmit="return confirm('Anda yakin?');">
                                             @csrf

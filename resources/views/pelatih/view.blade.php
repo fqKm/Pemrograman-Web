@@ -23,11 +23,11 @@
                         </div>
                         <div>
                             <span class="text-sm text-gray-500">Spesialisasi</span>
-                            <p class="font-medium text-gray-800">{{ $pelatih->spesialisasi ?? '-' }}</p>
+                            <p class="font-medium text-lg">{{ $pelatih->spesialisasi ?? '-' }}</p>
                         </div>
                         <div>
                             <span class="text-sm text-gray-500">Bergabung Sejak</span>
-                            <p class="font-medium text-gray-800">{{ \Carbon\Carbon::parse($pelatih->tanggal_masuk)->format('d F Y') }}</p>
+                            <p class="font-medium text-lg">{{ \Carbon\Carbon::parse($pelatih->tanggal_masuk)->format('d F Y') }}</p>
                         </div>
                     </div>
                     <div class="mt-6 pt-4 border-t border-gray-200 flex justify-end">
@@ -46,7 +46,7 @@
                         <ul class="divide-y divide-gray-200">
                             @foreach($pelatih->kelas as $kelas)
                                 <li class="py-3">
-                                    <p class="font-medium text-gray-800">{{ $kelas->nama_kelas }}</p>
+                                    <p class="font-medium text-lg">{{ $kelas->nama_kelas }}</p>
                                     <p class="text-sm text-gray-600">
                                         Waktu: {{ \Carbon\Carbon::parse($kelas->waktu_mulai)->format('H:i') }} - {{ \Carbon\Carbon::parse($kelas->waktu_selesai)->format('H:i') }}
                                     </p>

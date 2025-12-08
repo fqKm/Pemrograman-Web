@@ -21,7 +21,7 @@
             </div>
 
     @if(session('success'))
-        <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">
+        <div class="bg-green-100 border border-indi-400 text-green-700 px-4 py-3 rounded mb-4">
             {{ session('success') }}
         </div>
     @endif
@@ -70,7 +70,7 @@
                     </td>
 
                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                            <a href="{{ route('members.show', $member) }}" class="text-green-600 hover:text-green-900 mr-3">Show</a>
+                            <a href="{{ route('members.show', $member) }}" class="text-indigo-600 hover:text-indigo-900 mr-3">Show</a>
                             <a href="{{ route('members.edit', $member) }}" class="text-indigo-600 hover:text-indigo-900 mr-3">Edit</a>
                             <form action="{{ route('members.destroy', $member) }}" method="POST" class="inline" onsubmit="return confirm('Apakah Anda yakin ingin menghapus data ini?');">
                                 @csrf
