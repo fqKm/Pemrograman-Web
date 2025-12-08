@@ -29,15 +29,6 @@ class MemberDashboardController extends Controller
 
         $membershipsPlans = Membership::all();
 
-        $availableClasses = Kelas::whereDoesntHave('member', function($query) use ($member) {
-                                $query->where('members.id', $member->id);
-                            })
-                            ->with(['pelatih'])      // Load data pelatih
-                            ->withCount('member')    // Hitung jumlah member yang sudah join (untuk kapasitas)
-                            ->orderBy('waktu_mulai', 'asc') // Urutkan dari yang terdekat
-                            ->limit(6)               // Batasi tampilan (misal 6 kelas)
-                            ->get(); // Contoh ambil 3 kelas
-                            
         $availableTools = Alat::limit(8)->get();    // Contoh ambil 4 alat
 
         $progressHistory = KemajuanMember::where('member_id', $member->id)
@@ -55,13 +46,47 @@ class MemberDashboardController extends Controller
             'user' => $user,
             'member' => $member,
             'membership' => $member->membership, // Data paket membership
-            'availableClasses' => $availableClasses,
             'availableTools' => $availableTools,
             'progressHistory' => $progressHistory,
             'workoutsThisMonth' => $workoutsThisMonth,
             'membershipsPlans' => $membershipsPlans,
             // Anda bisa menambahkan data lain seperti sisa hari, dll di sini
         ]);
+    }
+
+    public function kelas()
+    {
+        $user = auth()->user();
+        $member = Member::where('user_id', $user->id)->first();
+
+        // 1. Ambil Kelas Saya (yang sudah di-join)
+        $myClasses = $member->kelas()->with('pelatih')->get();
+
+        // 2. Ambil Kelas Tersedia (yang belum di-join)
+        $availableClasses = Kelas::whereDoesntHave('member', function($query) use ($member) {
+                                $query->where('members.id', $member->id);
+                            })
+                            ->with(['pelatih'])
+                            ->withCount('member')
+                            ->orderBy('waktu_mulai', 'asc')
+                            ->get();
+
+        return view('members.kelas.index', compact('myClasses', 'availableClasses'));
+    }
+
+    // 2. HALAMAN DETAIL KELAS (READ ONLY)
+    public function show($id)
+    {
+        $user = Auth::user();
+        $member = Member::where('user_id', $user->id)->first();
+        
+        // Ambil detail kelas beserta pelatih dan hitung member
+        $kelas = Kelas::with(['pelatih', 'member'])->withCount('member')->findOrFail($id);
+
+        // Cek status apakah member sudah join kelas ini
+        $isJoined = $kelas->member->contains($member->id);
+
+        return view('members.kelas.show', compact('kelas', 'isJoined'));
     }
 
 
@@ -95,16 +120,4 @@ class MemberDashboardController extends Controller
 
     return back()->with('success', 'Berhasil bergabung ke kelas ' . $kelas->nama_kelas);
     }
-
-    public function leaveKelas($id)
-{
-    $user = Auth::user();
-    $member = Member::where('user_id', $user->id)->first();
-    $kelas = Kelas::findOrFail($id);
-
-    // Detach member dari kelas
-    $kelas->member()->detach($member->id);
-
-    return back()->with('success', 'Anda berhasil membatalkan kelas ' . $kelas->nama_kelas);
-}
 }
