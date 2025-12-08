@@ -1,110 +1,94 @@
-<nav x-data="{ open: false }" class="bg-white dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700">
-    <!-- Primary Navigation Menu -->
+<nav x-data="{ open: false }" class="sticky top-0 z-50 bg-white dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700  ">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex justify-between h-16">
-            <div class="flex">
-                <!-- Logo -->
+        {{-- Mengubah tata letak untuk mencocokkan gambar (Logo Kiri, Navigasi Tengah, Dropdown/Aksi Kanan) --}}
+        <div class="flex justify-between items-center h-16">
+            {{-- Blok Kiri (Logo) --}}
+            <div class="flex items-center">
                 <div class="shrink-0 flex items-center">
-                    <a href="{{ route('dashboard') }}">
-                        <x-application-logo class="block h-9 w-auto fill-current text-gray-800 dark:text-gray-200"/>
+                    <a href="{{ route('dashboard') }}" class="flex items-center space-x-2">
+                        {{-- Sesuaikan logo Anda agar terlihat seperti "Fithub Gym" --}}
+                        <svg class="h-6 w-6 text-indigo-600 dark:text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                        <span class="text-xl font-bold text-gray-800 dark:text-gray-200">Fithub Gym</span>
+                        {{-- Mengganti <x-application-logo> dengan teks dan SVG sederhana sesuai gambar --}}
                     </a>
                 </div>
+            </div>
+            <div class="hidden sm:flex flex-1 justify-center">
+                {{-- Blok Tengah (Navigation Links - Dipertahankan untuk Dashboard, tetapi diubah gayanya sedikit) --}}
+                <div class="hidden space-x-8 sm:flex **text-gray-600 dark:text-gray-600 font-medium **">
+                    
+                    {{-- TAUTAN PUBLIK/NON-AUTH (Contoh, jika ini adalah halaman utama) --}}
+                    {{-- Anda bisa menambahkan tautan publik di sini jika pengguna BELUM login --}}
+                    {{-- @guest
+                        <x-nav-link href="#">{{ __('Home') }}</x-nav-link>
+                        <x-nav-link href="#">{{ __('About') }}</x-nav-link>
+                        <x-nav-link href="#">{{ __('Classes') }}</x-nav-link>
+                        <x-nav-link href="#">{{ __('Membership') }}</x-nav-link>
+                    @endguest --}}
 
-                <!-- Navigation Links -->
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    {{-- TAUTAN DASHBOARD BERDASARKAN PERAN (sesuai kode asli Anda) --}}
                     @if(Auth::user()->isAdmin())
-                        <x-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('*.dashboard')">
+                        <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                             {{ __('Dashboard') }}
                         </x-nav-link>
-
-                        <x-nav-link :href="route('members.index')" :active="request()->routeIs('members.*')">
-                            {{ __('Member') }}
-                        </x-nav-link>
-
-                        <x-nav-link :href="route('kelas.index')" :active="request()->routeIs('kelas.*')">
-                            {{ __('Kelas') }}
-                        </x-nav-link>
-
-                        <x-nav-link :href="route('pelatih.index')" :active="request()->routeIs('pelatih.*')">
-                            {{ __('Pelatih') }}
-                        </x-nav-link>
-
-                        <x-nav-link :href="route('membership.index')" :active="request()->routeIs('membership.*')">
-                            {{__('Membership')}}
-                        </x-nav-link>
-
-                        <x-nav-link :href="route('alat.index')" :active="request()->routeIs('alat.*')">
-                            {{__('Alat')}}
-                        </x-nav-link>
+                        {{-- ... (lanjutkan tautan Admin lainnya) ... --}}
+                        <x-nav-link :href="route('members.index')" :active="request()->routeIs('members.*')">{{ __('Member') }}</x-nav-link>
+                        <x-nav-link :href="route('kelas.index')" :active="request()->routeIs('kelas.*')">{{ __('Kelas') }}</x-nav-link>
+                        <x-nav-link :href="route('pelatih.index')" :active="request()->routeIs('pelatih.*')">{{ __('Pelatih') }}</x-nav-link>
+                        <x-nav-link :href="route('membership.index')" :active="request()->routeIs('membership.*')">{{__('Membership')}}</x-nav-link>
+                        <x-nav-link :href="route('alat.index')" :active="request()->routeIs('alat.*')">{{__('Alat')}}</x-nav-link>
                     @endif
 
                     @if(Auth::user()->isTrainer())
-                        <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard.*')">
-                            {{ __('Dashboard') }}
-                        </x-nav-link>
-
-                        <x-nav-link :href="route('kelas.index')" :active="request()->routeIs('kelas.*')">
-                            {{ __('Kelas') }}
-                        </x-nav-link>
-
-{{--                        <x-nav-link :href="route('progress.index')" :active="request()->routeIs('progress.*')">--}}
-{{--                            {{ __('Progress') }}--}}
-{{--                        </x-nav-link>--}}
-
+                        {{-- ... (tautan Trainer) ... --}}
+                        <x-nav-link :href="route('dashboard')" :active="request()->routeIs('pelatih.dashboard')">{{ __('Dashboard') }}</x-nav-link>
+                        <x-nav-link :href="route('kelas.index')" :active="request()->routeIs('kelas.*')">{{ __('Kelas') }}</x-nav-link>
                     @endif
 
                     @if(Auth::user()->isMember())
-                        <x-nav-link :href="route('members.dashboard')" :active="request()->routeIs('members.dashboard')">
-                            {{ __('Dashboard') }}
-                        </x-nav-link>
-
-                        <x-nav-link :href="route('members.kelas.index')" :active="request()->routeIs('members.kelas.*')">
-                            {{ __('Kelas') }}
-                        </x-nav-link>
+                        {{-- ... (tautan Member) ... --}}
+                        <x-nav-link :href="route('dashboard')" :active="request()->routeIs('members.dashboard')">{{ __('Dashboard') }}</x-nav-link>
                     @endif
 
                 </div>
             </div>
 
-            <!-- Settings Dropdown -->
+            {{-- Blok Kanan (Settings Dropdown/Aksi) --}}
             <div class="hidden sm:flex sm:items-center sm:ms-6">
-                <x-dropdown align="right" width="48">
-                    <x-slot name="trigger">
-                        <button
-                            class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150">
-                            <div>{{ Auth::user()->name }}</div>
-
-                            <div class="ms-1">
-                                <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg"
-                                     viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd"
-                                          d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                                          clip-rule="evenodd"/>
-                                </svg>
-                            </div>
-                        </button>
-                    </x-slot>
-
-                    <x-slot name="content">
-                        <x-dropdown-link :href="route('profile.edit')">
-                            {{ __('Profile') }}
-                        </x-dropdown-link>
-
-                        <!-- Authentication -->
-                        <form method="POST" action="{{ route('logout') }}">
-                            @csrf
-
-                            <x-dropdown-link :href="route('logout')"
-                                             onclick="event.preventDefault();
-                                                this.closest('form').submit();">
-                                {{ __('Log Out') }}
-                            </x-dropdown-link>
-                        </form>
-                    </x-slot>
-                </x-dropdown>
+                @auth
+                    {{-- Jika Pengguna Sudah Login, tampilkan Dropdown (Log Out) --}}
+                    <x-dropdown align="right" width="48">
+                        {{-- ... (kode dropdown yang sudah ada) ... --}}
+                        <x-slot name="trigger">
+                            <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150">
+                                <div>{{ Auth::user()->name }}</div>
+                                <div class="ms-1">
+                                    <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/>
+                                    </svg>
+                                </div>
+                            </button>
+                        </x-slot>
+                        <x-slot name="content">
+                            <x-dropdown-link :href="route('profile.edit')">{{ __('Profile') }}</x-dropdown-link>
+                            <form method="POST" action="{{ route('logout') }}">
+                                @csrf
+                                <x-dropdown-link :href="route('logout')" onclick="event.preventDefault(); this.closest('form').submit();">{{ __('Log Out') }}</x-dropdown-link>
+                            </form>
+                        </x-slot>
+                    </x-dropdown>
+                @else
+                    {{-- Jika Pengguna BELUM Login, tampilkan tombol aksi sesuai gambar --}}
+                    <a href="{{ route('login') }}" class="text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-gray-100 font-medium px-4 py-2 transition duration-150 ease-in-out">
+                        {{ __('Log In') }}
+                    </a>
+                    <a href="{{ route('register') }}" class="ml-4 **bg-indigo-600** hover:bg-indigo-700 **text-white** font-medium py-2 px-4 rounded-lg transition duration-150 ease-in-out **shadow-md**">
+                        {{ __('Join Now') }}
+                    </a>
+                @endauth
             </div>
 
-            <!-- Hamburger -->
+            {{-- ... (Hamburger/Mobile Menu tetap sama) ... --}}
             <div class="-me-2 flex items-center sm:hidden">
                 <button @click="open = ! open"
                         class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 dark:text-gray-500 hover:text-gray-500 dark:hover:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-900 focus:outline-none focus:bg-gray-100 dark:focus:bg-gray-900 focus:text-gray-500 dark:focus:text-gray-400 transition duration-150 ease-in-out">

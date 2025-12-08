@@ -7,12 +7,18 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            @if(auth()->user()->hasPermission('buat_kelas'))
-            <div class="flex justify-end mb-6">
-                <a href="{{ route('kelas.create') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                    + Tambah Kelas Baru
-                </a>
-            </div>
+            @if(auth()->user()->hasPermission('buat_kelas'))                
+                <div class="flex items-center justify-end mb-4">
+                    <div class="w-1/2  p-4">
+                        <h2 class="text-2xl font-semibold dark:text-white text-gray-900 ">Daftar Member</h2>
+                    </div>
+                    <div class="w-1/2 items-center p-4 text-right">
+                        <!-- <h1 class="text-2xl font-semibold text-gray-800">Daftar Member</h1> -->
+                        <a href="{{ route('kelas.create') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                            + Tambah Kelas Baru
+                        </a>
+                    </div>
+                </div>
             @endif
 
             @if(session('success'))

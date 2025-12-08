@@ -8,11 +8,16 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="flex justify-end mb-4">
-                <!-- <h1 class="text-2xl font-semibold text-gray-800">Daftar Member</h1> -->
-                <a href="{{ route('members.create') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                    + Tambah Member Baru
-                </a>
+            <div class="flex items-center justify-end mb-4">
+                <div class="w-1/2  p-4">
+                    <h2 class="text-2xl font-semibold dark:text-white text-gray-900 ">Daftar Member</h2>
+                </div>
+                <div class="w-1/2 items-center p-4 text-right">
+                    <!-- <h1 class="text-2xl font-semibold text-gray-800">Daftar Member</h1> -->
+                    <a href="{{ route('members.create') }}" class="bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded">
+                        + Tambah Member Baru
+                    </a>
+                </div>
             </div>
 
     @if(session('success'))
@@ -30,7 +35,7 @@
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Email</th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Nomor HP</th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Paket Membership</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Tanggal Lahir</th>
+                        {{-- <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Tanggal Lahir</th> --}}
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Tanggal Bergabung</th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Status</th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Aksi</th>
@@ -50,9 +55,9 @@
                             {{ $member->membership->nama_plan ?? 'N/A' }}
                         </td>
 
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                        {{--<td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                             {{ \Carbon\Carbon::parse($member->tanggal_lahir)->format('d M Y') }}
-                        </td>
+                        </td>--}}
 
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                             {{ \Carbon\Carbon::parse($member->tanggal_bergabung)->format('d M Y') }}

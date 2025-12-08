@@ -7,10 +7,15 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="flex justify-end mb-4">
-                <a href="{{ route('membership.create') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                    + Tambah Tier Membership
-                </a>
+            <div class="flex items-center justify-end mb-4">
+                <div class="w-1/2  p-4">
+                    <h2 class="text-2xl font-semibold dark:text-white text-gray-900 ">Daftar Membership</h2>
+                </div>
+                <div class="w-1/2 items-center p-4 text-right">
+                    <a href="{{ route('membership.create') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                        + Tambah Tier Membership
+                    </a>
+                </div>
             </div>
 
             @if(session('success'))

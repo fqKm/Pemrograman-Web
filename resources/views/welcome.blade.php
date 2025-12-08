@@ -13,7 +13,7 @@
 <body class="antialiased font-sans text-gray-900 bg-white">
 
     {{-- NAVBAR --}}
-    <nav class="fixed w-full z-50 bg-white/90 backdrop-blur-sm border-b border-gray-100">
+    <nav class="sticky top-0 w-full z-50 bg-white/90 backdrop-blur-sm border-b border-gray-100">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16 items-center">
                 <div class="flex-shrink-0 flex items-center gap-2">
