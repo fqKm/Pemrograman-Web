@@ -9,7 +9,7 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="flex justify-between mb-4">
                 <h1 class="text-2xl font-semibold text-gray-800 dark:text-white ">Detail Member</h1>
-                <a href="{{ route('members.index') }}" class="text-indigo-500 hover:text-indigo-700">
+                <a href="{{ route('admin.members.index') }}" class="text-indigo-500 hover:text-indigo-700">
                     &larr; Kembali ke Daftar
                 </a>
             </div>

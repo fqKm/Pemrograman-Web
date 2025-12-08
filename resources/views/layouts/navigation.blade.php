@@ -31,12 +31,26 @@
                         <x-nav-link :href="route('dashboard')" :active="request()->routeIs('*.dashboard')">
                             {{ __('Dashboard') }}
                         </x-nav-link>
-                        {{-- ... (lanjutkan tautan Admin lainnya) ... --}}
-                        <x-nav-link :href="route('members.index')" :active="request()->routeIs('members.*')">{{ __('Member') }}</x-nav-link>
-                        <x-nav-link :href="route('kelas.index')" :active="request()->routeIs('kelas.*')">{{ __('Kelas') }}</x-nav-link>
-                        <x-nav-link :href="route('pelatih.index')" :active="request()->routeIs('pelatih.*')">{{ __('Pelatih') }}</x-nav-link>
-                        <x-nav-link :href="route('membership.index')" :active="request()->routeIs('membership.*')">{{__('Membership')}}</x-nav-link>
-                        <x-nav-link :href="route('alat.index')" :active="request()->routeIs('alat.*')">{{__('Alat')}}</x-nav-link>
+
+                        <x-nav-link :href="route('admin.members.index')" :active="request()->routeIs('*.members.*')">
+                            {{ __('Member') }}
+                        </x-nav-link>
+
+                        <x-nav-link :href="route('admin.kelas.index')" :active="request()->routeIs('*.kelas.*')">
+                            {{ __('Kelas') }}
+                        </x-nav-link>
+
+                        <x-nav-link :href="route('admin.pelatih.index')" :active="request()->routeIs('*.pelatih.*')">
+                            {{ __('Pelatih') }}
+                        </x-nav-link>
+
+                        <x-nav-link :href="route('admin.membership.index')" :active="request()->routeIs('*.membership.*')">
+                            {{__('Membership')}}
+                        </x-nav-link>
+
+                        <x-nav-link :href="route('admin.alat.index')" :active="request()->routeIs('*.alat.*')">
+                            {{__('Alat')}}
+                        </x-nav-link>
                     @endif
 
                     @if(Auth::user()->isTrainer())

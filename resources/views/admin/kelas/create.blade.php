@@ -10,7 +10,7 @@
             <h1 class="text-2xl font-semibold text-gray-800 mb-4 dark:text-white">Tambah Kelas Baru</h1>
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6">
-                    <form action="{{ route('kelas.store') }}" method="POST">
+                    <form action="{{ route('admin.kelas.store') }}" method="POST">
                         @csrf
                         {{-- Nama Kelas --}}
                         <div class="mb-4">
@@ -23,13 +23,13 @@
                         <div class="mb-4">
                             <label for="hari" class="block text-sm font-medium text-gray-700">Pilih Hari</label>
                             <select name="hari" id="hari" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm" required>
-                                <option value="1" {{ ('hari', $kela->hari) == 1 ? 'selected' : '' }}>Senin</option>
-                                <option value="2" {{ ('hari', $kela->hari) == 2 ? 'selected' : '' }}>Selasa</option>
-                                <option value="3" {{ ('hari', $kela->hari) == 3 ? 'selected' : '' }}>Rabu</option>
-                                <option value="4" {{ ('hari', $kela->hari) == 4 ? 'selected' : '' }}>Kamis</option>
-                                <option value="5" {{ ('hari', $kela->hari) == 5 ? 'selected' : '' }}>Jumat</option>
-                                <option value="6" {{ ('hari', $kela->hari) == 6 ? 'selected' : '' }}>Sabtu</option>
-                                <option value="7" {{ ('hari', $kela->hari) == 7 ? 'selected' : '' }}>Minggu</option>
+                                <option value="1" {{ old('hari') == 1 ? 'selected' : '' }}>Senin</option>
+                                <option value="2" {{ old('hari') == 2 ? 'selected' : '' }}>Selasa</option>
+                                <option value="3" {{ old('hari') == 3 ? 'selected' : '' }}>Rabu</option>
+                                <option value="4" {{ old('hari') == 4 ? 'selected' : '' }}>Kamis</option>
+                                <option value="5" {{ old('hari') == 5 ? 'selected' : '' }}>Jumat</option>
+                                <option value="6" {{ old('hari') == 6 ? 'selected' : '' }}>Sabtu</option>
+                                <option value="7" {{ old('hari') == 7 ? 'selected' : '' }}>Minggu</option>
                             </select>
                             @error('hari')<p class="mt-1 text-sm text-red-600">{{ $message }}</p>@enderror
                         </div>

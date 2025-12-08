@@ -12,7 +12,7 @@
 
     <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
         <div class="p-6">
-            <form action="{{ route('members.store') }}" method="POST">
+            <form action="{{ route('admin.members.store') }}" method="POST">
                 @csrf
                 <div class="mb-4">
                     <label for="nama" class="block text-sm font-medium text-gray-700">Nama Lengkap</label>
@@ -64,7 +64,7 @@
                 </div>
 
                 <div class="flex items-center justify-end mt-6">
-                    <a href="{{ route('members.index') }}" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded mr-2">Batal</a>
+                    <a href="{{ route('admin.members.index') }}" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded mr-2">Batal</a>
                     <button type="submit" class="bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded">Simpan</button>
                 </div>
             </form>

@@ -10,7 +10,7 @@
             <h1 class="text-2xl font-semibold text-gray-800 mb-4 dark:text-white">Tambah Alat Baru</h1>
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6">
-                    <form action="{{ route('alat.store') }}" method="POST">
+                    <form action="{{ route('admin.alat.store') }}" method="POST">
                         @csrf
                         {{-- Nama Alat --}}
                         <div class="mb-4">
@@ -33,7 +33,7 @@
                         </div>
 
                         <div class="flex items-center justify-end mt-6">
-                            <a href="{{ route('alat.index') }}" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded mr-2">Batal</a>
+                            <a href="{{ route('admin.alat.index') }}" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded mr-2">Batal</a>
                             <button type="submit" class="bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded">Simpan</button>
                         </div>
                     </form>

@@ -26,7 +26,7 @@ Route::get('/', function () {
         if ($user->isTrainer()) return redirect()->route('pelatih.dashboard');
         if ($user->isMember()) return redirect()->route('members.dashboard');
         return redirect()->route('dashboard');
-}
+    }
     $memberships = Membership::all();
     $featuredClasses = Kelas::with('pelatih')->limit(3)->get(); // Contoh ambil 3 kelas
 
@@ -36,7 +36,7 @@ Route::get('/', function () {
 Route::get('/dashboard', function () {
     $user = auth()->user();
 
-    if ($user->isAdmin()) { 
+    if ($user->isAdmin()) {
          return redirect()->route('admin.dashboard');
     }
 
@@ -52,8 +52,9 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::get('/admin/dashboard', [DashboardController::class, 'adminDashboard'])
-        ->middleware('permission:ubah_akun_member') // Sesuaikan nama permission Anda (jika ada)
+        ->middleware('permission:ubah_akun_member') // Sesuaikan nama permission Anda
         ->name('admin.dashboard');
+
 Route::get('/pelatih/dashboard', [DashboardController::class, 'pelatihDashboard'])
     ->middleware(['auth', 'permission:lihat_akun_pelatih'])
     ->name('pelatih.dashboard');
@@ -61,9 +62,11 @@ Route::get('/pelatih/dashboard', [DashboardController::class, 'pelatihDashboard'
 Route::get('/members/dashboard', [MemberDashboardController::class, 'index'])
     ->middleware(['auth', 'permission:lihat_akun_member'])
     ->name('members.dashboard');
+
 Route::get('/members/classes', [MemberDashboardController::class, 'kelas'])
     ->middleware(['auth', 'permission:lihat_akun_member'])
     ->name('members.kelas.index');
+
 Route::get('/members/classes/{id}', [MemberDashboardController::class, 'show'])
     ->middleware(['auth', 'permission:lihat_akun_member'])
     ->name('members.kelas.show');
@@ -77,26 +80,28 @@ Route::middleware('auth')->group(function () {
 Route::post('/webhook/payment', [WebhookController::class, 'handlePayment'])->name('payment.webhook');
 
 Route::middleware(['auth'])->group(function () {
-    // URL: /admin/members
-    // Nama Route: admin.members.index
-    Route::resource('members', MemberController::class);
 
-    // URL: /admin/kelas
-    // Nama Route: admin.kelas.index
-    Route::resource('kelas', KelasController::class);
+    // --- BAGIAN INI DIPERBAIKI ---
+    // Mengelompokkan route admin agar memiliki prefix URL '/admin' dan nama 'admin.'
+    Route::prefix('admin')->name('admin.')->group(function () {
+        // URL: /admin/members -> Route Name: admin.members.index
+        Route::resource('members', MemberController::class);
 
-    // URL: /admin/pelatih
-    // Nama Route: admin.pelatih.index
-    Route::resource('pelatih', PelatihController::class);
+        // URL: /admin/kelas -> Route Name: admin.kelas.index
+        Route::resource('kelas', KelasController::class);
 
-    // URL: /admin/membership
-    // Nama Route: admin.membership.index
-    Route::resource('membership', MembershipController::class);
+        // URL: /admin/pelatih -> Route Name: admin.pelatih.index
+        Route::resource('pelatih', PelatihController::class);
+
+        // URL: /admin/membership -> Route Name: admin.membership.index
+        Route::resource('membership', MembershipController::class);
+
+        Route::resource('alat', AlatController::class);
+    });
+    // --- AKHIR PERBAIKAN ---
 
     // --- ALUR 1: PEMBAYARAN MEMBERSHIP ---
-    // Halaman pilih membership (biasanya di landing page atau menu khusus)
-    // Route::get('/membership', [MembershipController::class, 'index'])->name('membership.index');
-
+    
     // Konfirmasi Beli
     Route::get('/membership/{membership}/buy', [OrderController::class, 'confirm'])->name('membership.buy');
     
@@ -128,6 +133,8 @@ Route::middleware(['auth'])->group(function () {
     });
 
     Route::middleware(['auth', 'permission:buat_kelas'])->group(function () {
+        // Perhatikan: Route create/store admin sudah ditangani resource di atas (admin.kelas.create),
+        // Tapi jika Anda butuh route manual tanpa prefix admin, pastikan controller redirect ke route yang benar.
         Route::get('kelas/create', [KelasController::class, 'create'])->name('kelas.create');
         Route::post('kelas', [KelasController::class, 'store'])->name('kelas.store');
     });
@@ -139,9 +146,6 @@ Route::middleware(['auth'])->group(function () {
 
     Route::middleware(['auth', 'permission:hapus_kelas'])->group(function () {
         Route::delete('kelas/{id}', [KelasController::class, 'destroy'])->name('kelas.destroy');
-    });
-
-    Route::middleware(['auth', 'permission:lihat_member_membership'])->group(function () {
     });
 
     Route::middleware(['auth', 'permission:tambah_membership'])->group(function () {
@@ -168,7 +172,6 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/orders/{order}/success', [OrderController::class, 'success'])->name('orders.success');
     });
 
-
     Route::middleware(['auth', 'permission:buat_progress'])->group(function () {
         Route::get('progress/create/{kelas_id}', [ProgressController::class, 'create'])->name('progress.create');
         Route::post('progress', [ProgressController::class, 'store'])->name('progress.store');
@@ -181,9 +184,6 @@ Route::middleware(['auth'])->group(function () {
     Route::middleware(['auth', 'permission:ubah_progress'])->group(function () {
         Route::get('progress/edit/{id}', [ProgressController::class, 'edit'])->name('progress.edit');
         Route::put('progress/edit/{id}', [ProgressController::class, 'update'])->name('progress.update');
-    });
-
-    Route::middleware(['auth', 'permission:hapus_progress'])->group(function () {
     });
 
     Route::middleware(['auth', 'permission:lihat_alat'])->group(function () {
@@ -242,9 +242,6 @@ Route::middleware(['auth'])->group(function () {
         Route::put('progressmember/{id}', [ProgressMemberController::class, 'update'])->name('progressmember.update');
         Route::delete('progressmember/{id}', [ProgressMemberController::class, 'destroy'])->name('progressmember.destroy');
     });
-
-    Route::post('kelas/{id}/join', [MemberDashboardController::class, 'joinKelas'])->name('kelas.join');
 });
-
 
 require __DIR__.'/auth.php';

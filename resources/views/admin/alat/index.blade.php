@@ -14,7 +14,7 @@
                     </div>
                     <div class="w-1/2 items-center p-4 text-right">
                         <!-- <h1 class="text-2xl font-semibold text-gray-800">Daftar Member</h1> -->
-                        <a href="{{ route('alat.create') }}"
+                        <a href="{{ route('admin.alat.create') }}"
                         class="bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded">
                             + Tambah Alat Baru
                         </a>
@@ -54,11 +54,11 @@
                         {{-- Bagian Tombol Aksi (Footer Kartu) --}}
                         <div class="p-4 bg-gray-50 border-t border-gray-200 flex items-center justify-end space-x-3">
                             @if(auth()->user()->hasPermission('ubah_alat'))
-                                <a href="{{ route('alat.edit', $data_alat->id) }}"
+                                <a href="{{ route('admin.alat.edit', $data_alat->id) }}"
                                    class="text-sm text-indigo-600 hover:text-indigo-900">Edit</a>
                             @endif
                             @if(auth()->user()->hasPermission('hapus_alat'))
-                                <form action="{{ route('alat.destroy', $data_alat->id) }}" method="POST"
+                                <form action="{{ route('admin.alat.destroy', $data_alat->id) }}" method="POST"
                                       onsubmit="return confirm('Anda yakin ingin menghapus alat ini?');">
                                     @csrf
                                     @method('DELETE')
