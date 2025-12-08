@@ -36,6 +36,10 @@ Route::get('/', function () {
 Route::get('/dashboard', function () {
     $user = auth()->user();
 
+    if ($user->isAdmin()) { 
+         return redirect()->route('admin.dashboard');
+    }
+
     if ($user->isTrainer()) {
         return redirect()->route('pelatih.dashboard');
     }
@@ -47,6 +51,9 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
+Route::get('/admin/dashboard', [DashboardController::class, 'adminDashboard'])
+        ->middleware('permission:ubah_akun_member') // Sesuaikan nama permission Anda (jika ada)
+        ->name('admin.dashboard');
 Route::get('/pelatih/dashboard', [DashboardController::class, 'pelatihDashboard'])
     ->middleware(['auth', 'permission:lihat_akun_pelatih'])
     ->name('pelatih.dashboard');
@@ -54,6 +61,12 @@ Route::get('/pelatih/dashboard', [DashboardController::class, 'pelatihDashboard'
 Route::get('/members/dashboard', [MemberDashboardController::class, 'index'])
     ->middleware(['auth', 'permission:lihat_akun_member'])
     ->name('members.dashboard');
+Route::get('/members/classes', [MemberDashboardController::class, 'kelas'])
+    ->middleware(['auth', 'permission:lihat_akun_member'])
+    ->name('members.kelas.index');
+Route::get('/members/classes/{id}', [MemberDashboardController::class, 'show'])
+    ->middleware(['auth', 'permission:lihat_akun_member'])
+    ->name('members.kelas.show');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -94,7 +107,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/orders/{order}', [OrderController::class, 'waiting'])->name('orders.waiting');
     Route::get('/orders/{order}/success', [OrderController::class, 'success'])->name('orders.success');
 
-    // --- ALUR 2: BOOKING KELAS (Gratis, Syarat Member Aktif) ---
     // Dashboard Member (Lihat Kelas)
     Route::get('/dashboard/member', [MemberDashboardController::class, 'index'])->name('member.dashboard');
     
@@ -108,6 +120,7 @@ Route::middleware(['auth'])->group(function () {
     Route::middleware(['auth', 'permission:lihat_kelas'])->group(function () {
         Route::get('kelas', [KelasController::class, 'index'])->name('kelas.index');
         Route::get('kelas/view/{id_kelas}', [KelasController::class, 'show'])->name('kelas.show');
+        Route::post('/members/classes/{id}/join', [MemberDashboardController::class, 'joinKelas'])->name('members.kelas.join');
     });
 
     Route::middleware(['auth', 'permission:lihat_member_kelas'])->group(function () {
@@ -148,7 +161,6 @@ Route::middleware(['auth'])->group(function () {
     Route::middleware(['auth', 'permission:lihat_daftar_membership'])->group(function () {
         Route::get('membership', [MembershipController::class, 'index'])->name('membership.index');
         Route::get('membership/{id}', [MembershipController::class, 'show'])->name('membership.show');
-
         Route::get('/orders/{membership_id}/confirm', [OrderController::class, 'confirm'])->name('orders.confirm');
         Route::post('/orders/{membership_id}/process', [OrderController::class, 'process'])->name('orders.process');
         Route::get('/orders/{order}/waiting', [OrderController::class, 'waiting'])->name('orders.waiting');
