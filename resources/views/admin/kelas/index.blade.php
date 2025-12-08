@@ -7,12 +7,18 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            @if(auth()->user()->hasPermission('buat_kelas'))
-            <div class="flex justify-end mb-6">
-                <a href="{{ route('admin.kelas.create') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                    + Tambah Kelas Baru
-                </a>
-            </div>
+            @if(auth()->user()->hasPermission('buat_kelas'))                
+                <div class="flex items-center justify-end mb-4">
+                    <div class="w-1/2  p-4">
+                        <h2 class="text-2xl font-semibold dark:text-white text-gray-900 ">Daftar Kelas</h2>
+                    </div>
+                    <div class="w-1/2 items-center p-4 text-right">
+                        <!-- <h1 class="text-2xl font-semibold text-gray-800">Daftar Member</h1> -->
+                        <a href="{{ route('admin.kelas.create') }}" class="bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded">
+                            + Tambah Kelas Baru
+                        </a>
+                    </div>
+                </div>
             @endif
 
             @if(session('success'))
@@ -31,9 +37,8 @@
                             <p class="text-sm text-gray-600 mt-1">Oleh: {{ $kelas->pelatih->nama_pelatih ?? 'N/A' }}</p>
 
                             <div class="mt-4 text-sm text-gray-800 space-y-2">
-                                <div>
-                                    <span class="text-sm text-gray-500">Hari : </span>
-                                    <p class="font-medium text-gray-800">
+                                <div>                                    
+                                    <p class=>Hari : <strong>
                                             <?php
                                             echo match ($kelas->hari) {
                                                 1 => "Senin",
@@ -46,17 +51,18 @@
                                                 default => "Hari tidak valid",
                                             };
                                             ?>
+                                        </strong>
                                     </p>
                                 </div>
-                                <p><strong>Waktu:</strong> {{ \Carbon\Carbon::parse($kelas->waktu_mulai)->format('H:i') }} - {{ \Carbon\Carbon::parse($kelas->waktu_selesai)->format('H:i') }}</p>
-                                <p><strong>Kapasitas:</strong> {{ $kelas->kapasitas_maksimum }} orang</p>
+                                <p>Waktu:<strong> {{ \Carbon\Carbon::parse($kelas->waktu_mulai)->format('H:i') }} - {{ \Carbon\Carbon::parse($kelas->waktu_selesai)->format('H:i') }}</strong></p>
+                                <p>Kapasitas:<strong> {{ $kelas->kapasitas_maksimum }} orang</strong></p>
                                 <p class="text-gray-500 mt-2">{{ $kelas->deskripsi }}</p>
                             </div>
                         </div>
 
                         {{-- Bagian Tombol Aksi (Footer Kartu) --}}
                         <div class="p-4 bg-gray-50 border-t border-gray-200 flex items-center justify-end space-x-3">
-                            <a href="{{ route('admin.kelas.show', $kelas) }}" class="text-sm text-blue-600 hover:text-blue-900">Lihat</a>
+                            <a href="{{ route('admin.kelas.show', $kelas) }}" class="text-sm text-indigo-600 hover:text-indigo-900">Show</a>
                             @if(auth()->user()->hasPermission('ubah_kelas'))
                             <a href="{{ route('admin.kelas.edit', $kelas) }}" class="text-sm text-indigo-600 hover:text-indigo-900">Edit</a>
                             @endif
