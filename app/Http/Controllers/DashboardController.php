@@ -8,6 +8,8 @@ use App\Models\Member;
 use App\Models\Pelatih;
 use App\Models\Kelas;
 use App\Models\Order; // Pastikan model Order sudah ada
+use App\Models\Membership;
+use App\Models\Alat;
 
 class DashboardController extends Controller
 {
@@ -46,6 +48,8 @@ class DashboardController extends Controller
         // 1. Statistik Utama (Card Atas)
         $totalMembers = Member::count();
         $activeMembers = Member::where('status', 'aktif')->count();
+        $membershipCount = Membership::count();
+        $alatCount = Alat::count();
         $totalTrainers = Pelatih::count();
         $totalClasses = Kelas::count();
 
@@ -62,6 +66,8 @@ class DashboardController extends Controller
             'totalMembers', 
             'activeMembers', 
             'totalTrainers', 
+            'membershipCount', 
+            'alatCount', 
             'totalClasses', 
             'totalRevenue', 
             'recentOrders'
