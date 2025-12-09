@@ -10,28 +10,45 @@
             <h1 class="text-2xl font-semibold text-gray-800 mb-4 dark:text-white">Edit Data Pelatih</h1>
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6">
-                    <form action="{{ route('admin.pelatih.update', $pelatih) }}" method="POST">
+                    {{-- Pastikan route update-nya benar, misal: pelatih.update --}}
+                    <form action="{{ route('admin.pelatih.update', $pelatih->id) }}" method="POST">
                         @csrf
                         @method('PUT')
 
                         {{-- Nama Pelatih --}}
                         <div class="mb-4">
                             <label for="nama_pelatih" class="block text-sm font-medium text-gray-700">Nama Pelatih</label>
-                            <input type="text" name="nama_pelatih" id="nama_pelatih" value="{{ old('nama_pelatih', $pelatih->nama_pelatih) }}" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm" required>
+                            <input type="text" name="nama_pelatih" id="nama_pelatih" 
+                                value="{{ old('nama_pelatih', $pelatih->nama_pelatih) }}" 
+                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" required>
                             @error('nama_pelatih')<p class="mt-1 text-sm text-red-600">{{ $message }}</p>@enderror
+                        </div>
+
+                        {{-- Nomor HP (TAMBAHAN) --}}
+                        <div class="mb-4">
+                            <label for="nomor_hp" class="block text-sm font-medium text-gray-700">Nomor HP</label>
+                            {{-- Ambil value dari relasi user->phone --}}
+                            <input type="text" name="nomor_hp" id="nomor_hp" 
+                                value="{{ old('nomor_hp', $pelatih->user->phone ?? '') }}" 
+                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                            @error('nomor_hp')<p class="mt-1 text-sm text-red-600">{{ $message }}</p>@enderror
                         </div>
 
                         {{-- Spesialisasi --}}
                         <div class="mb-4">
                             <label for="spesialisasi" class="block text-sm font-medium text-gray-700">Spesialisasi</label>
-                            <input type="text" name="spesialisasi" id="spesialisasi" value="{{ old('spesialisasi', $pelatih->spesialisasi) }}" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">
+                            <input type="text" name="spesialisasi" id="spesialisasi" 
+                                value="{{ old('spesialisasi', $pelatih->spesialisasi) }}" 
+                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
                             @error('spesialisasi')<p class="mt-1 text-sm text-red-600">{{ $message }}</p>@enderror
                         </div>
 
                         {{-- Tanggal Masuk --}}
                         <div class="mb-4">
                             <label for="tanggal_masuk" class="block text-sm font-medium text-gray-700">Tanggal Masuk</label>
-                            <input type="date" name="tanggal_masuk" id="tanggal_masuk" value="{{ old('tanggal_masuk', $pelatih->tanggal_masuk) }}" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm" required>
+                            <input type="date" name="tanggal_masuk" id="tanggal_masuk" 
+                                value="{{ old('tanggal_masuk', $pelatih->tanggal_masuk) }}" 
+                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" required>
                             @error('tanggal_masuk')<p class="mt-1 text-sm text-red-600">{{ $message }}</p>@enderror
                         </div>
 

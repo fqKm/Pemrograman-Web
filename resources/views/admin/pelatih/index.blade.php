@@ -78,8 +78,15 @@
 
                                     {{-- Kolom Kontak --}}
                                     <td class="px-6 py-4 whitespace-nowrap">
-                                        <div class="text-sm text-gray-900">{{ $pelatih->email ?? '-' }}</div>
-                                        <div class="text-sm text-gray-500">{{ $pelatih->nomor_hp ?? '-' }}</div>
+                                        {{-- Ambil email dari relasi user --}}
+                                        <div class="text-sm text-gray-900">
+                                            {{ $pelatih->user->email ?? 'Email tidak ada' }}
+                                        </div>
+                                        
+                                        {{-- Ambil no hp dari relasi user (kolom 'phone') atau kolom 'nomor_hp' jika ada --}}
+                                        <div class="text-sm text-gray-500">
+                                            {{ $pelatih->user->phone ?? '-' }}
+                                        </div>
                                     </td>
 
                                     {{-- Kolom Tanggal Masuk --}}

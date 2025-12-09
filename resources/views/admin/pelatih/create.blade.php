@@ -1,36 +1,60 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">{{ __('Tambah Pelatih Baru') }}</h2>
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            {{ __('Tambah Pelatih Baru') }}
+        </h2>
     </x-slot>
+
     <div class="py-12">
-        <h2>kuda</h2>
-        <div class="max-w-2xl mx-auto sm:px-6 lg:px-8">
-            <h1 class="text-2xl font-semibold text-gray-800 mb-4 dark:text-white">Tambah Pelatih Baru</h1>
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6">
-                    <form action="{{ route('admin.pelatih.store') }}" method="POST">
-                        @csrf
-                        <div class="mb-4">
-                            <label for="nama_pelatih" class="block text-sm font-medium text-gray-700">Nama Pelatih</label>
-                            <input type="text" name="nama_pelatih" id="nama_pelatih" value="{{ old('nama_pelatih') }}" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm" required>
-                            @error('nama_pelatih')<p class="mt-1 text-sm text-red-600">{{ $message }}</p>@enderror
-                        </div>
-                        <div class="mb-4">
-                            <label for="spesialisasi" class="block text-sm font-medium text-gray-700">Spesialisasi</label>
-                            <input type="text" name="spesialisasi" id="spesialisasi" value="{{ old('spesialisasi') }}" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">
-                            @error('spesialisasi')<p class="mt-1 text-sm text-red-600">{{ $message }}</p>@enderror
-                        </div>
-                        <div class="mb-4">
-                            <label for="tanggal_masuk" class="block text-sm font-medium text-gray-700">Tanggal Masuk</label>
-                            <input type="date" name="tanggal_masuk" id="tanggal_masuk" value="{{ old('tanggal_masuk') }}" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm" required>
-                            @error('tanggal_masuk')<p class="mt-1 text-sm text-red-600">{{ $message }}</p>@enderror
-                        </div>
-                        <div class="flex items-center justify-end mt-6">
-                            <a href="{{ route('admin.pelatih.index') }}" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded mr-2">Batal</a>
-                            <button type="submit" class="bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded">Simpan</button>
-                        </div>
-                    </form>
-                </div>
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6">
+                
+                <form action="{{ route('admin.pelatih.store') }}" method="POST">
+                    @csrf
+
+                    {{-- Nama Pelatih --}}
+                    <div class="mb-4">
+                        <x-input-label for="nama_pelatih" :value="__('Nama Pelatih')" />
+                        <x-text-input id="nama_pelatih" class="block mt-1 w-full" type="text" name="nama_pelatih" :value="old('nama_pelatih')" required />
+                        <x-input-error :messages="$errors->get('nama_pelatih')" class="mt-2" />
+                    </div>
+
+                    {{-- Email (Untuk Login) --}}
+                    <div class="mb-4">
+                        <x-input-label for="email" :value="__('Email (Untuk Login)')" />
+                        <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required />
+                        <x-input-error :messages="$errors->get('email')" class="mt-2" />
+                    </div>
+
+                    {{-- Password (Untuk Login) --}}
+                    <div class="mb-4">
+                        <x-input-label for="password" :value="__('Password')" />
+                        <x-text-input id="password" class="block mt-1 w-full" type="password" name="password" required />
+                        <x-input-error :messages="$errors->get('password')" class="mt-2" />
+                    </div>
+
+                    {{-- Spesialisasi --}}
+                    <div class="mb-4">
+                        <x-input-label for="spesialisasi" :value="__('Spesialisasi (Contoh: Yoga, Cardio)')" />
+                        <x-text-input id="spesialisasi" class="block mt-1 w-full" type="text" name="spesialisasi" :value="old('spesialisasi')" />
+                        <x-input-error :messages="$errors->get('spesialisasi')" class="mt-2" />
+                    </div>
+
+                    {{-- Nomor HP --}}
+                    <div class="mb-4">
+                        <x-input-label for="nomor_hp" :value="__('Nomor HP')" />
+                        <x-text-input id="nomor_hp" class="block mt-1 w-full" type="text" name="nomor_hp" :value="old('nomor_hp')" />
+                        <x-input-error :messages="$errors->get('nomor_hp')" class="mt-2" />
+                    </div>
+
+                    <div class="flex items-center justify-end mt-4">
+                        <a href="{{ route('admin.pelatih.index') }}" class="text-gray-600 hover:text-gray-900 mr-4">Batal</a>
+                        <x-primary-button>
+                            {{ __('Simpan Pelatih') }}
+                        </x-primary-button>
+                    </div>
+                </form>
+
             </div>
         </div>
     </div>
