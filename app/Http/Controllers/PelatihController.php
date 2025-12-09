@@ -4,8 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Pelatih;
+use App\Models\User; // Import Model User
+use App\Models\Role; // Import Model Role
 use App\Models\Kelas;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class PelatihController extends Controller
 {
@@ -15,7 +18,7 @@ class PelatihController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $pelatihs = Pelatih::latest()->paginate(10);
+        $pelatihs = Pelatih::with('user')->paginate(10);
         return match ($user->role->name) {
             'admin'   => view('admin.pelatih.index', compact('pelatihs')),
             // Pastikan nama view ini sesuai dengan file yang ada di folder resources/views
@@ -40,12 +43,29 @@ class PelatihController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nama_pelatih' => 'required|string|max:100',
+            'nama_pelatih' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users', // Email wajib unik di tabel users
+            'password' => 'required|string|min:8', // Password untuk login
             'spesialisasi' => 'nullable|string|max:100',
-            'tanggal_masuk' => 'required|date',
+            'nomor_hp' => 'nullable|string|max:20',
         ]);
 
-        Pelatih::create($request->all());
+        $rolePelatih = Role::where('name', 'pelatih')->first();
+
+        $user = User::create([
+            'name' => $request->nama_pelatih,
+            'email' => $request->email,
+            'password' => Hash::make($request->password), // Hash password
+            'role_id' => $rolePelatih ? $rolePelatih->id : null,
+            'phone' => $request->nomor_hp,
+        ]);
+
+        Pelatih::create([
+            'user_id' => $user->id, // Ambil ID dari user yang baru dibuat
+            'nama_pelatih' => $request->nama_pelatih,
+            'spesialisasi' => $request->spesialisasi,
+            'tanggal_masuk' => now(), // Set tanggal hari ini
+        ]);
 
         return redirect()->route('admin.pelatih.index')->with('success', 'Pelatih baru berhasil ditambahkan!');
     }
