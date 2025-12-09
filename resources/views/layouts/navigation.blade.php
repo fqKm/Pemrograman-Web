@@ -62,6 +62,9 @@
                     @if(Auth::user()->isMember())
                         {{-- ... (tautan Member) ... --}}
                         <x-nav-link :href="route('dashboard')" :active="request()->routeIs('members.dashboard')">{{ __('Dashboard') }}</x-nav-link>
+                        <x-nav-link :href="route('members.kelas.index')" :active="request()->routeIs('members.kelas.*')">
+                            {{ __('Kelas') }}
+                        </x-nav-link>
                     @endif
 
                 </div>
